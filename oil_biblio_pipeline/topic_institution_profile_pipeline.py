@@ -33,7 +33,7 @@ DEFAULT_TOPIC_OUTPUT_DIR = BASE_DIR / "topic_evolution_doi_required_2011_2025"
 DEFAULT_DATASET_TAG = "doi_required"
 DEFAULT_DATASET_LABEL = "DOI主键版本"
 
-TARGET_TYPES = ("高校/科研院所", "企业研发中心", "国际组织")
+TARGET_TYPES = ("高校/科研院所", "企业研发中心", "国际组织", "政府机构")
 TARGET_LEVELS = ("头部引领型", "中坚创新型", "特色细分型")
 
 STRONG_ACADEMIC_KEYWORDS_CN = ("大学", "学院")
@@ -60,6 +60,11 @@ INTERNATIONAL_PHRASES_CN = (
     "国际石油天然气生产者协会",
 )
 INTERNATIONAL_ABBREVIATIONS = {"iea", "opec", "wpc", "spe", "iogp"}
+GOVERNMENT_EXACT_NAMES = {
+    "中国教育部",
+    "教育部",
+    "中华人民共和国教育部",
+}
 INSTITUTION_KEYWORDS_CN = tuple(dict.fromkeys(STRONG_ACADEMIC_KEYWORDS_CN + ACADEMIC_KEYWORDS_CN + ENTERPRISE_KEYWORDS_CN + ("协会", "学会", "署", "委员会", "理事会", "中心", "实验室")))
 INSTITUTION_KEYWORDS_EN = tuple(
     dict.fromkeys(
@@ -74,15 +79,27 @@ RE_SPLIT_NAME_PARTS = re.compile(r"\s*[,;/\\]+\s*")
 RE_ADDRESS_HINT = re.compile(r"(?<![a-z])(?:road|rd|street|st|avenue|ave|boulevard|blvd|lane|ln|apt|apartment|building|bldg|room|floor)(?![a-z])")
 RE_ADDRESS_STYLE_NAME = re.compile(r"^(?:no\s*)?\d+[a-z0-9]*(?:\s+[a-z0-9]+){0,4}$")
 RE_NUMERIC_SUBUNIT = re.compile(r"^\d+(?:st|nd|rd|th)?\s+")
+RE_LEADING_DIGITS = re.compile(r"^\d{2,}")
 GENERIC_SUBUNIT_HINTS = ("drilling", "exploration", "production", "team", "plant", "factory", "workshop", "branch", "crew", "unit", "company", "co", "division")
+NOISE_MARKERS_CN = ("编辑部", "编委会", "指导委员会", "项目部", "工程科", "研究科", "办公室")
+NOISE_MARKERS_EN = ("editorial office", "editorial board", "committee office", "working group")
 MANUAL_INSTITUTION_ALIASES = {
     "china university of petroleum beijing": "中国石油大学（北京）",
     "china university of petroleum east china": "中国石油大学（华东）",
     "china university of petroleum qingdao": "中国石油大学（华东）",
     "china university of petroleum huadong": "中国石油大学（华东）",
-    "sinopec lubricant company": "Sinopec Lubricant Co",
-    "sinopec lubricant co ltd": "Sinopec Lubricant Co",
+    "sinopec lubricant company": "中国石油化工股份有限公司",
+    "sinopec lubricant co": "中国石油化工股份有限公司",
+    "sinopec lubricant co ltd": "中国石油化工股份有限公司",
 }
+
+SAFE_MAPPING_METHODS = {
+    "人工精确匹配",
+    "人工规则生成",
+    "人工规范名匹配",
+    "规则稳定译名",
+}
+BLOCKED_MAPPING_SENTINEL = "__blocked_norm__"
 
 OUTPUT_FILE_TEMPLATES = {
     "institution_profile_classification": "institution_profile_classification_{dataset_tag}_2011_2025.csv",
@@ -201,6 +218,16 @@ def is_numeric_subunit_name(name: str) -> bool:
     return any(contains_english_keyword(normalized, hint) for hint in GENERIC_SUBUNIT_HINTS)
 
 
+def has_noise_marker(name: str) -> bool:
+    text = strip_institution_quotes(name)
+    normalized = normalize_lookup_key(text)
+    if RE_LEADING_DIGITS.match(normalized):
+        return True
+    if any(marker in text for marker in NOISE_MARKERS_CN):
+        return True
+    return any(contains_english_keyword(normalized, marker) for marker in NOISE_MARKERS_EN)
+
+
 def lookup_mapped_institution_name(name: str, raw_to_norm: dict[str, str]) -> str:
     exact = compact_text(raw_to_norm.get(compact_text(name), ""))
     if exact:
@@ -258,12 +285,22 @@ def clean_standardized_institution_name(name: str, raw_to_norm: dict[str, str]) 
             continue
         seen.add(normalized_candidate)
 
-        resolved = strip_institution_quotes(lookup_mapped_institution_name(candidate, raw_to_norm) or candidate)
+        mapped_name = lookup_mapped_institution_name(candidate, raw_to_norm)
+        if mapped_name == BLOCKED_MAPPING_SENTINEL:
+            continue
+        if not mapped_name and not re.search(r"[\u4e00-\u9fff]", candidate):
+            continue
+        resolved = strip_institution_quotes(mapped_name or candidate)
         if is_mixed_translation_artifact(resolved) and not is_mixed_translation_artifact(candidate):
             resolved = candidate
         if len(resolved) < 2 or not re.search(r"[A-Za-z\u4e00-\u9fff]", resolved):
             continue
-        if is_address_like_name(resolved) or is_numeric_subunit_name(resolved) or is_mixed_translation_artifact(resolved):
+        if (
+            is_address_like_name(resolved)
+            or is_numeric_subunit_name(resolved)
+            or has_noise_marker(resolved)
+            or is_mixed_translation_artifact(resolved)
+        ):
             continue
         if not has_institution_anchor(resolved):
             continue
@@ -279,7 +316,7 @@ def is_valid_institution_name(name: str) -> bool:
     text = strip_institution_quotes(name)
     if len(text) < 2 or not re.search(r"[A-Za-z\u4e00-\u9fff]", text):
         return False
-    if is_address_like_name(text) or is_numeric_subunit_name(text) or is_mixed_translation_artifact(text):
+    if is_address_like_name(text) or is_numeric_subunit_name(text) or has_noise_marker(text) or is_mixed_translation_artifact(text):
         return False
     return has_institution_anchor(text)
 
@@ -314,6 +351,8 @@ def classify_institution_type(name: str) -> tuple[str, str]:
     lowered = text.lower()
     if not text:
         return "其他", "空值"
+    if text in GOVERNMENT_EXACT_NAMES or text.endswith("教育部"):
+        return "政府机构", "政府机构特例:教育部"
     for keyword in STRONG_ACADEMIC_KEYWORDS_CN:
         if keyword in text:
             return "高校/科研院所", f"高校强特征:{keyword}"
@@ -355,6 +394,20 @@ def load_raw_to_norm_map(path: Path) -> dict[str, str]:
             raw_name = compact_text(row.get("institution_name", ""))
             trans_name = compact_text(row.get("institution_trans", ""))
             norm_name = compact_text(row.get("institution_norm", ""))
+            method = compact_text(row.get("candidate_method", ""))
+            safe_mapping = bool(
+                norm_name
+                and (
+                    method in SAFE_MAPPING_METHODS
+                    or (re.search(r"[\u4e00-\u9fff]", raw_name or "") and re.search(r"[\u4e00-\u9fff]", norm_name))
+                )
+            )
+            if not safe_mapping:
+                for key in (trans_name, norm_name):
+                    if key and key not in mapping:
+                        mapping[key] = BLOCKED_MAPPING_SENTINEL
+                        mapping[normalize_lookup_key(key)] = BLOCKED_MAPPING_SENTINEL
+                continue
             for key in (raw_name, trans_name, norm_name):
                 if key and norm_name:
                     mapping[key] = norm_name

@@ -1,0 +1,87 @@
+﻿word,polarity,category,corpus_frequency,document_frequency,action,rationale
+contraction,negative,demand,702,562,added,Demand contraction is usually bearish.
+dampen,negative,demand,197,187,added,Demand destruction language is usually bearish.
+dampened,negative,demand,130,130,added,Demand destruction language is usually bearish.
+downturn,negative,demand,1630,1303,already_negative,Economic downturns are usually bearish.
+recession,negative,demand,3001,1740,already_negative,Recession risk is usually bearish for oil demand.
+slack,negative,demand,159,157,already_negative,Slack demand or market conditions are usually bearish.
+slowdown,negative,demand,2193,1659,added,Demand slowdowns are usually bearish.
+weak,negative,demand,2539,2012,already_negative,Weak demand or prices are usually bearish.
+weaker,negative,demand,1764,1440,already_negative,Weak demand or prices are usually bearish.
+weakness,negative,demand,992,852,already_negative,Weak demand or prices are usually bearish.
+ceasefire,negative,geopolitics,1052,531,added,Ceasefires often reduce geopolitical oil risk premium.
+truce,negative,geopolitics,175,143,added,Truces often reduce geopolitical oil risk premium.
+build,negative,inventory,8459,5800,added,Inventory builds are usually bearish.
+builds,negative,inventory,888,763,added,Inventory builds are usually bearish.
+bearish,negative,price_move,2878,1957,already_negative,Directly signals a downward oil-price view.
+crash,negative,price_move,2452,1833,already_negative,Signals abrupt downward movement in prices.
+crashed,negative,price_move,627,578,already_negative,Signals abrupt downward movement in prices.
+decline,negative,price_move,12718,7304,already_negative,Signals downward movement in prices.
+declined,negative,price_move,2801,2364,added,Signals downward movement in prices.
+declines,negative,price_move,2520,1962,already_negative,Signals downward movement in prices.
+drop,negative,price_move,6983,5077,added,Signals downward movement in prices.
+dropped,negative,price_move,3683,3030,added,Signals downward movement in prices.
+drops,negative,price_move,654,609,added,Signals downward movement in prices.
+plunge,negative,price_move,1254,1126,added,Signals sharp downward movement in prices.
+plunged,negative,price_move,1231,1125,added,Signals sharp downward movement in prices.
+slump,negative,price_move,1383,1219,already_negative,Directly signals a falling oil-price move.
+slumped,negative,price_move,557,509,added,Directly signals a falling oil-price move.
+slumping,negative,price_move,162,154,already_negative,Directly signals a falling oil-price move.
+discount,negative,pricing,1948,1243,added,Discounted crude signals weak market conditions.
+discounts,negative,pricing,724,546,added,Discounted crude signals weak market conditions.
+abundance,negative,supply_balance,541,439,reclassified_from_positive,Abundant supply is usually bearish.
+abundant,negative,supply_balance,1350,1114,reclassified_from_positive,Abundant supply is usually bearish.
+easing,negative,supply_balance,1290,1087,reclassified_from_positive,Supply concerns easing is usually bearish.
+glut,negative,supply_balance,2917,2097,already_negative,A supply glut is usually bearish.
+oversupplied,negative,supply_balance,549,496,added,Oversupply is usually bearish.
+oversupply,negative,supply_balance,1603,1286,added,Oversupply is usually bearish.
+surplus,negative,supply_balance,2213,1454,added,A supply surplus is usually bearish.
+attack,positive,geopolitics,2548,1462,reclassified_from_negative,Attacks on energy infrastructure tend to be bullish.
+attacked,positive,geopolitics,404,347,added,Attacks on energy infrastructure tend to be bullish.
+attacks,positive,geopolitics,2889,1613,reclassified_from_negative,Attacks on energy infrastructure tend to be bullish.
+blockade,positive,geopolitics,1128,579,added,Blockades can threaten oil shipments.
+blockades,positive,geopolitics,202,133,added,Blockades can threaten oil shipments.
+embargo,positive,geopolitics,1261,748,added,Embargoes often tighten oil supply.
+escalate,positive,geopolitics,349,316,added,Escalation raises geopolitical risk premiums.
+escalated,positive,geopolitics,215,206,added,Escalation raises geopolitical risk premiums.
+escalation,positive,geopolitics,1001,794,added,Escalation raises geopolitical risk premiums.
+sanction,positive,geopolitics,787,633,added,Sanctions often tighten oil supply.
+sanctions,positive,geopolitics,13445,5334,added,Sanctions often tighten oil supply.
+draw,positive,inventory,2801,1833,added,Inventory draws typically support oil prices.
+drawdown,positive,inventory,490,407,added,Inventory drawdowns typically support oil prices.
+drawdowns,positive,inventory,268,224,added,Inventory drawdowns typically support oil prices.
+draws,positive,inventory,698,577,added,Inventory draws typically support oil prices.
+bullish,positive,price_move,4670,3068,already_positive,Directly signals an upward oil-price view.
+jump,positive,price_move,2128,1899,added,Signals abrupt upward movement in prices.
+jumped,positive,price_move,2313,1966,added,Signals abrupt upward movement in prices.
+rally,positive,price_move,4032,2799,added,Directly signals a rising oil-price move.
+rallying,positive,price_move,393,367,added,Directly signals a rising oil-price move.
+rebound,positive,price_move,2785,2204,added,Indicates recovery after a drop.
+rebounded,positive,price_move,687,642,added,Indicates recovery after a drop.
+spike,positive,price_move,2160,1761,added,Signals abrupt upward movement in prices.
+spiked,positive,price_move,580,537,added,Signals abrupt upward movement in prices.
+surge,positive,price_move,3441,2877,added,Signals sharp upward movement in prices.
+surged,positive,price_move,1615,1473,added,Signals sharp upward movement in prices.
+curb,positive,production_policy,1055,981,added,Supply curbs are usually bullish for oil prices.
+curbs,positive,production_policy,365,309,added,Supply curbs are usually bullish for oil prices.
+curtailed,positive,production_policy,361,312,added,Curtailments usually tighten supply.
+cut,positive,production_policy,14938,8701,added,Output cuts are usually bullish for oil prices.
+cuts,positive,production_policy,12079,5933,added,Output cuts are usually bullish for oil prices.
+premium,positive,risk_premium,2688,1756,added,Risk premiums often accompany upward price pressure.
+premiums,positive,risk_premium,404,304,added,Risk premiums often accompany upward price pressure.
+deficit,positive,supply_balance,2543,1708,added,Market deficits are usually bullish.
+deficits,positive,supply_balance,488,387,added,Market deficits are usually bullish.
+shortage,positive,supply_balance,2420,1823,reclassified_from_negative,Supply shortages are usually bullish for oil prices.
+shortages,positive,supply_balance,2228,1657,added,Supply shortages are usually bullish for oil prices.
+shortfall,positive,supply_balance,639,544,added,Supply shortfalls are usually bullish for oil prices.
+shortfalls,positive,supply_balance,217,197,added,Supply shortfalls are usually bullish for oil prices.
+squeeze,positive,supply_balance,746,646,added,Supply squeezes often accompany upward price pressure.
+squeezed,positive,supply_balance,268,245,added,Supply squeezes often accompany upward price pressure.
+tight,positive,supply_balance,3699,2235,added,Often indicates a tightening supply-demand balance.
+tightening,positive,supply_balance,1569,1336,added,Often indicates a tightening supply-demand balance.
+tightness,positive,supply_balance,446,373,added,Often indicates a tightening supply-demand balance.
+disrupted,positive,supply_disruption,688,623,added,Supply disruptions are usually bullish.
+disruption,positive,supply_disruption,1996,1508,reclassified_from_negative,Supply disruptions are usually bullish.
+disruptions,positive,supply_disruption,2269,1741,added,Supply disruptions are usually bullish.
+outage,positive,supply_disruption,928,646,added,Production or transport outages are usually bullish.
+outages,positive,supply_disruption,1831,1257,added,Production or transport outages are usually bullish.

@@ -1,0 +1,16 @@
+指标代码,指标名称,维度代码,指标维度,指标方向,是否纳入TOPSIS,筛选说明
+distinct_paper_count,去重论文总数,research_output,科研产出,正向,是,代表机构在正式语料中的发文规模，作为核心产出指标。
+recent_paper_ratio_2021_2025,近五年发文占比,research_output,科研产出,正向,是,反映机构近期产出活跃度和持续性，补充规模指标。
+h_index,H指数,academic_impact,学术影响,正向,是,兼顾发文与被引表现，是机构学术影响力的经典指标。
+high_cited_paper_ratio,高被引论文占比,academic_impact,学术影响,正向,是,反映机构高影响成果的输出比重，契合开题报告中的高被引维度。
+collaboration_paper_ratio,合作论文占比,collaboration_international,合作与国际化,正向,是,反映机构研究合作倾向，是合作网络维度的基础指标。
+international_collaboration_paper_ratio,国际合作论文占比,collaboration_international,合作与国际化,正向,是,反映机构国际合作强度，对应开题报告中的国际合作维度。
+partner_country_region_count,合作国家/地区数,collaboration_international,合作与国际化,正向,是,反映国际合作覆盖面与外部连接广度。
+occurrence_count,,,,,否,与 distinct_paper_count 高度重合（r=0.9992），不重复纳入。
+avg_annual_paper_count,,,,,否,与 distinct_paper_count 存在直接换算关系，不单独入模。
+active_year_count,,,,,否,在 Top100 机构中变异较低（CV=0.0681），区分度不足。
+total_citations,,,,,否,与 distinct_paper_count 相关性较高（r=0.9198），容易重复反映规模效应。
+avg_citations_per_paper,,,,,否,与 high_cited_paper_ratio 高度相关（r=0.9775），本轮优先保留高被引质量指标。
+median_citations_per_paper,,,,,否,与 high_cited_paper_ratio 相关性较高，且与 h_index 部分重叠，本轮未纳入。
+international_partner_institution_count,,,,,否,与 partner_country_region_count 高度相关（r=0.8290），本轮优先保留国家/地区覆盖度指标。
+avg_partner_institutions_per_collab_paper,,,,,否,与 collaboration_paper_ratio 相关性较高（r=0.7316），本轮未纳入。

@@ -1,0 +1,14 @@
+Oil-price lexicon expansion summary
+Input dataset: D:\tokenized_data.csv
+Corpus rows processed: 37665
+Base positive lexicon size: 2006
+Base negative lexicon size: 4783
+Merged positive lexicon size: 2051
+Merged negative lexicon size: 4802
+Expanded positive terms retained from corpus: 49
+Expanded negative terms retained from corpus: 37
+Reclassified terms: 7
+
+The expanded lexicon is oil-price oriented:
+positive = bullish / upward oil-price pressure
+negative = bearish / downward oil-price pressure

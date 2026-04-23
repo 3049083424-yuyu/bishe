@@ -1,0 +1,8 @@
+CNKI clean rebuild admission rules
+
+1. This stage is an admission-and-standardization step, not the final cross-database deduplication step.
+2. Keep a CNKI record when it contains at least one usable title field (title_cn_en or title or title_en), one publication-time field (publish_date or year), one journal field (journal_cn or journal_en), and one institution field (institution_extracted or institution or institution_norm).
+3. Do not require DOI and do not require journal_en specifically, because those source-specific completeness rules would remove otherwise usable Chinese records without improving bibliographic identity.
+4. Normalize standard DOI candidates from doi or registered_doi with the strict slash-required pattern 10.<prefix>/<suffix>.
+5. Do not auto-collapse CNKI rows at this stage. Audit checks showed that a small number of repeated DOI strings still point to different titles, so same-source DOI equality is not treated as a sufficient clean-stage deduplication rule.
+6. Export unstable DOI candidates for manual audit and exclude them from later DOI-based auto-merging in the rebuild probe.

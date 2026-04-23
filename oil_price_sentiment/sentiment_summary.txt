@@ -1,0 +1,53 @@
+Oil-price sentiment scoring summary
+Input dataset: D:\tokenized_data.csv
+Lexicon mode: market_expansion
+Lexicon source: D:\graduate\oil_price_sentiment\expanded_sentiment_lexicon.csv
+Rows processed: 37665
+Mean normalized score: 0.075885
+Bullish articles: 16920
+Neutral articles: 9586
+Bearish articles: 11159
+
+Top bullish matched terms:
+cut: 15330
+sanctions: 13837
+cuts: 12547
+bullish: 4998
+rally: 4548
+tight: 3750
+surge: 3715
+draw: 3011
+attacks: 2974
+rebound: 2972
+premium: 2742
+attack: 2624
+deficit: 2601
+shortage: 2522
+jumped: 2321
+disruptions: 2307
+spike: 2300
+jump: 2293
+shortages: 2290
+disruption: 2020
+
+Top bearish matched terms:
+decline: 12876
+build: 8710
+drop: 7199
+dropped: 3688
+glut: 3122
+bearish: 3085
+recession: 3078
+declined: 2802
+crash: 2704
+weak: 2603
+declines: 2536
+slowdown: 2264
+surplus: 2231
+discount: 1966
+weaker: 1786
+downturn: 1654
+oversupply: 1636
+slump: 1472
+plunge: 1407
+abundant: 1361

@@ -1,0 +1,12 @@
+Probe rebuild dual-key deduplication rules for the 2011-2025 corpus
+
+1. Keep records whose publication year falls in 2011-2025.
+2. Build a strict standard DOI key from normalize(doi or registered_doi), and only accept DOI strings that match the slash-required pattern 10.<prefix>/<suffix>.
+3. If the same source reuses one strict DOI key for multiple normalized titles within the analysis window, mark that DOI key as unstable and exclude it from DOI-based auto-merging.
+4. Do not use source-local raw DOI-like strings as automatic merge keys.
+5. Build a metadata fallback key from normalized title + year + first author + journal.
+6. Merge two records when they share a usable standard DOI key, or when they can be safely connected by the metadata fallback key without conflicting standard DOI keys.
+7. If a record has no usable standard DOI key and its metadata key matches multiple existing groups, treat the fallback match as ambiguous and keep the record separate unless another key resolves the match.
+8. DOI conflicts and weak-similarity candidates are exported to review tables instead of being force-merged.
+9. Fuse fields within each deduplicated group using source-aware priorities: Chinese text prefers CNKI then CSCD, English text prefers WOS then CNKI, cited_count prefers WOS then CSCD then CNKI.
+10. Store merged institution names in institution_extracted and merged country pairs in institution_country_pairs for downstream institution and collaboration analysis.

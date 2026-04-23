@@ -1,3 +1,9 @@
 __pycache__/
 .pytest_cache/
 *.pyc
+Microsoft/
+__codex_write_test_*.txt
+
+# 本地大体量语料与可再生中间文件，不直接推送到 GitHub。
+thesis_rebuild/corpus/*.csv
+thesis_rebuild/topic_evolution_dual_key_2011_2025/topic_document_assignment_*.csv
