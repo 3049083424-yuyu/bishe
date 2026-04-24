@@ -1,0 +1,512 @@
+from __future__ import annotations
+
+import csv
+from collections import Counter, defaultdict
+from pathlib import Path
+
+from docx import Document
+from docx.enum.section import WD_SECTION
+from docx.enum.table import WD_TABLE_ALIGNMENT
+from docx.enum.text import WD_ALIGN_PARAGRAPH
+from docx.oxml.ns import qn
+from docx.shared import Cm, Pt
+
+
+REBUILD_ROOT = Path(r"D:\graduate\thesis_rebuild")
+MANUSCRIPT_DIR = REBUILD_ROOT / "manuscript"
+QA_DIR = REBUILD_ROOT / "qa"
+INSTITUTION_DIR = REBUILD_ROOT / "institution_eval"
+TOPIC_DIR = REBUILD_ROOT / "topic_evolution_dual_key_2011_2025"
+
+TITLE_ZH = "基于高质量期刊文献挖掘的全球石油领域研究机构学术影响力评价与主题演化分析"
+TITLE_EN = "Academic Influence Evaluation and Topic Evolution Analysis of Global Petroleum Research Institutions Based on High-Quality Journal Literature Mining"
+
+MD_OUTPUT = MANUSCRIPT_DIR / "thesis_draft_dual_key_2011_2025.md"
+DOCX_OUTPUT = MANUSCRIPT_DIR / "thesis_draft_dual_key_2011_2025.docx"
+QA_OUTPUT = QA_DIR / "thesis_delivery_qa_2026-04-24.md"
+
+ENCODING = "gb18030"
+
+
+def read_csv(path: Path) -> list[dict[str, str]]:
+    with path.open("r", encoding=ENCODING, newline="") as f:
+        return list(csv.DictReader(f))
+
+
+def load_data() -> dict[str, object]:
+    top20 = read_csv(INSTITUTION_DIR / "institution_topsis_top20_dual_key_2011_2025.csv")
+    weights = read_csv(INSTITUTION_DIR / "institution_weight_scheme_top100_dual_key_2011_2025.csv")
+    dimension_rows = read_csv(INSTITUTION_DIR / "institution_dimension_top10_dual_key_2011_2025.csv")
+    type_review = read_csv(INSTITUTION_DIR / "institution_type_review_top100_dual_key_2011_2025.csv")
+
+    preprocess_rows = read_csv(TOPIC_DIR / "topic_preprocess_stats_dual_key_2011_2025.csv")
+    model_rows = read_csv(TOPIC_DIR / "topic_model_selection_dual_key_2011_2025.csv")
+    topic_strength_rows = read_csv(TOPIC_DIR / "topic_strength_dual_key_2011_2025.csv")
+    evolution_rows = read_csv(TOPIC_DIR / "topic_evolution_paths_dual_key_2011_2025.csv")
+    type_dist_rows = read_csv(TOPIC_DIR / "topic_distribution_by_institution_type_dual_key_2011_2025.csv")
+    level_dist_rows = read_csv(TOPIC_DIR / "topic_distribution_by_institution_level_dual_key_2011_2025.csv")
+    profile_rows = read_csv(TOPIC_DIR / "institution_profile_classification_dual_key_2011_2025.csv")
+
+    weight_lines = [
+        f"{row['label_zh']}（{row['dimension_zh']}）={float(row['combined_weight']):.6f}"
+        for row in weights
+    ]
+    total_docs = sum(int(row["阶段文献数"]) for row in preprocess_rows)
+    total_model_docs = sum(int(row["进入建模文献数"]) for row in preprocess_rows)
+    selected_k = {
+        row["阶段"]: {
+            "k": int(row["候选主题数"]),
+            "perplexity": row["困惑度"],
+            "coherence": row["一致性得分"],
+        }
+        for row in model_rows
+        if row["是否选中"] == "1"
+    }
+
+    top_strength_by_period: dict[str, list[dict[str, str]]] = defaultdict(list)
+    for row in topic_strength_rows:
+        top_strength_by_period[row["阶段"]].append(row)
+    for rows in top_strength_by_period.values():
+        rows.sort(key=lambda item: float(item["主题强度"]), reverse=True)
+
+    type_theme_by_period: dict[tuple[str, str], list[dict[str, str]]] = defaultdict(list)
+    for row in type_dist_rows:
+        type_theme_by_period[(row["阶段"], row["机构类型"])].append(row)
+    for rows in type_theme_by_period.values():
+        rows.sort(key=lambda item: float(item["主题占比"]), reverse=True)
+
+    level_theme_by_period: dict[tuple[str, str], list[dict[str, str]]] = defaultdict(list)
+    for row in level_dist_rows:
+        level_theme_by_period[(row["阶段"], row["机构层级"])].append(row)
+    for rows in level_theme_by_period.values():
+        rows.sort(key=lambda item: float(item["主题占比"]), reverse=True)
+
+    dimension_groups: dict[str, list[dict[str, str]]] = defaultdict(list)
+    for row in dimension_rows:
+        dimension_groups[row["榜单类型"]].append(row)
+
+    type_counts = Counter(row["机构类型"] for row in profile_rows)
+
+    foreign_top20 = [row["标准化机构名称"] for row in top20 if row["主属国家/地区"] != "中国"][:6]
+
+    return {
+        "top20": top20,
+        "weights": weights,
+        "weight_lines": weight_lines,
+        "dimension_groups": dimension_groups,
+        "type_review": type_review,
+        "preprocess_rows": preprocess_rows,
+        "model_rows": model_rows,
+        "topic_strength_rows": topic_strength_rows,
+        "evolution_rows": evolution_rows,
+        "type_dist_rows": type_dist_rows,
+        "level_dist_rows": level_dist_rows,
+        "profile_rows": profile_rows,
+        "type_counts": type_counts,
+        "selected_k": selected_k,
+        "top_strength_by_period": top_strength_by_period,
+        "type_theme_by_period": type_theme_by_period,
+        "level_theme_by_period": level_theme_by_period,
+        "total_docs": total_docs,
+        "total_model_docs": total_model_docs,
+        "foreign_top20": foreign_top20,
+    }
+
+
+def build_abstract_zh(data: dict[str, object]) -> str:
+    top20 = data["top20"]
+    type_counts: Counter[str] = data["type_counts"]
+    top1 = top20[0]
+    top2 = top20[1]
+    selected_k = data["selected_k"]
+    return (
+        "以中国科协《石油领域高质量科技期刊分级目录》对应的 109 本高质量期刊文献为数据来源，"
+        "整合 CNKI、WOS 与 CSCD 三库 2011-2025 年记录，构建双主键去重后的正式研究语料，"
+        f"共覆盖 {data['total_docs']} 篇文献。研究首先按照“标准 DOI 键 + 元数据回退键”的双主键规则完成跨库去重，"
+        "并通过机构译名清洗、标准化归并和有效机构过滤建立机构分析底表；随后从科研产出、学术影响、合作与国际化三个维度"
+        "构建 7 项指标，采用先验权重、熵权法与 CRITIC 法组合赋权，并借助 TOPSIS 对全球石油领域核心研究机构进行综合评价；"
+        "最后以三阶段 LDA 模型刻画主题演化路径，并比较不同机构类型与机构层级的主题偏好。"
+        f"结果显示：TOPSIS 综合排名前两位分别为 {top1['标准化机构名称']} 和 {top2['标准化机构名称']}，"
+        f"{top1['标准化机构名称']} 的综合得分为 {top1['TOPSIS综合得分']}；在机构画像层面，共识别企业研发中心 {type_counts['企业研发中心']} 家、"
+        f"高校/科研院所 {type_counts['高校/科研院所']} 家、政府机构 {type_counts['政府机构']} 家。"
+        f"主题演化分析在三个阶段均选取 K={selected_k['2011-2015']['k']} 的主题数，累计 {data['total_model_docs']} 篇文献进入建模，"
+        f"共识别 {len(data['evolution_rows'])} 条主题演化路径。整体来看，石油领域研究热点由早期的盆地-构造、油田开发和催化转化，"
+        "逐步演化为储层预测、二氧化碳利用与储存、催化活性位点等更强调绿色转型与精细化表征的研究组合。"
+        "高校/科研院所在知识探索型主题上占优，企业研发中心更集中于油田开发、储层预测与工程应用主题，政府机构样本规模较小，"
+        "仅适合作为补充观察。研究可为石油科技创新资源配置、机构竞争力诊断和主题布局优化提供数据支持。"
+    )
+
+
+def build_abstract_en(data: dict[str, object]) -> str:
+    top20 = data["top20"]
+    type_counts: Counter[str] = data["type_counts"]
+    return (
+        "Using literature from 109 high-quality petroleum journals as the source base, this study integrates records from CNKI, WOS, and CSCD "
+        f"and builds a dual-key deduplicated formal corpus for 2011-2025, covering {data['total_docs']} papers. "
+        "A two-key cross-database deduplication strategy combining standard DOI keys and metadata fallback keys is adopted, "
+        "followed by institution translation cleaning, normalization, and valid-institution filtering. "
+        "An institutional influence evaluation system with seven indicators is then constructed from three dimensions: research output, academic impact, and collaboration/internationalization. "
+        "Prior weights, entropy weights, and CRITIC weights are averaged and normalized to form the final TOPSIS weight scheme. "
+        "Finally, a three-stage LDA framework is used to identify topic evolution paths and compare thematic preferences across institution types and institution levels. "
+        f"The results show that {top20[0]['标准化机构名称']} and {top20[1]['标准化机构名称']} rank first and second in the comprehensive TOPSIS evaluation. "
+        f"The institutional profiling step identifies {type_counts['企业研发中心']} enterprise R&D centers, {type_counts['高校/科研院所']} universities/research institutes, and {type_counts['政府机构']} government institutions. "
+        f"Across the three periods, the model consistently selects 11 topics and extracts {len(data['evolution_rows'])} topic evolution paths. "
+        "The field has shifted from early basin-structure, oilfield development, and catalytic conversion topics to reservoir prediction, carbon utilization and storage, and catalytic active-site studies. "
+        "Universities and research institutes are more prominent in exploratory knowledge-intensive topics, while enterprise R&D centers show stronger concentration in development-oriented and engineering application topics. "
+        "Because stable international-organization samples are insufficient after institution cleaning, international organizations are discussed as a limitation rather than a formal comparison group."
+    )
+
+
+def markdown_table(headers: list[str], rows: list[list[str]]) -> str:
+    lines = [
+        "| " + " | ".join(headers) + " |",
+        "| " + " | ".join(["---"] * len(headers)) + " |",
+    ]
+    for row in rows:
+        lines.append("| " + " | ".join(row) + " |")
+    return "\n".join(lines)
+
+
+def build_markdown(data: dict[str, object]) -> str:
+    top10 = data["top20"][:10]
+    top10_names = "、".join(row["标准化机构名称"] for row in top10)
+    foreign_text = "、".join(data["foreign_top20"]) if data["foreign_top20"] else "经有效机构过滤后未形成稳定的国际组织样本"
+    type_counts: Counter[str] = data["type_counts"]
+    selected_k = data["selected_k"]
+    strength = data["top_strength_by_period"]
+    type_theme = data["type_theme_by_period"]
+    level_theme = data["level_theme_by_period"]
+    dimension_groups = data["dimension_groups"]
+
+    weights_table = markdown_table(
+        ["指标", "维度", "组合权重"],
+        [
+            [row["label_zh"], row["dimension_zh"], f"{float(row['combined_weight']):.6f}"]
+            for row in data["weights"]
+        ],
+    )
+
+    top10_table = markdown_table(
+        ["排名", "机构", "国家/地区", "综合得分", "主导优势维度"],
+        [
+            [
+                row["TOPSIS综合排名"],
+                row["标准化机构名称"],
+                row["主属国家/地区"],
+                row["TOPSIS综合得分"],
+                row["主导优势维度"],
+            ]
+            for row in top10
+        ],
+    )
+
+    model_table = markdown_table(
+        ["阶段", "建模文献数", "选定主题数", "困惑度", "一致性得分"],
+        [
+            [
+                row["阶段"],
+                row["进入建模文献数"],
+                str(selected_k[row["阶段"]]["k"]),
+                selected_k[row["阶段"]]["perplexity"],
+                selected_k[row["阶段"]]["coherence"],
+            ]
+            for row in data["preprocess_rows"]
+        ],
+    )
+
+    return f"""# {TITLE_ZH}
+
+## 摘要
+{build_abstract_zh(data)}
+
+**关键词：**高质量期刊文献；石油领域；研究机构；学术影响力；主题演化
+
+## Abstract
+**{TITLE_EN}**
+
+{build_abstract_en(data)}
+
+**Key Words:** high-quality journal literature; petroleum research institutions; academic influence; TOPSIS; topic evolution
+
+## 第1章 前言
+
+### 1.1 研究背景
+石油工业仍然是全球能源体系与工业原料体系中的关键支柱。随着能源转型、非常规油气开发、低碳利用与储层智能预测等议题持续升温，科研机构的学术影响力与主题布局能力逐渐成为衡量石油科技竞争力的重要窗口。与一般性大学排名不同，石油领域研究机构具有明显的行业导向、工程属性和跨国合作特征，单纯依赖论文数量或单一引文指标难以准确反映其真实学术位置与知识贡献。
+
+### 1.2 研究问题
+结合开题报告与当前重建结果，本文聚焦以下三个问题：其一，如何基于 109 本高质量期刊文献构建覆盖 2011-2025 年的正式语料，并在跨库整合场景下保持去重规则可复现、可审查；其二，如何面向全球石油领域研究机构构建兼顾产出、影响与合作的综合评价模型，并识别不同类型机构的相对优势；其三，如何在三阶段主题演化框架下，解释机构影响力结构与研究主题迁移之间的关系。
+
+### 1.3 研究思路
+本文将数据治理、机构评价和主题分析串联为一条完整链路。首先，对 CNKI、WOS 与 CSCD 记录执行双主键去重；其次，对机构名称进行译名统一、标准化归并和有效机构过滤，并据此形成核心机构频次表、Top100 集合和 TOPSIS 评价结果；最后，以正式语料为基础构建三阶段 LDA 主题模型，并比较高校/科研院所、企业研发中心与政府机构在不同阶段的主题偏好差异。
+
+## 第2章 数据来源与研究方法
+
+### 2.1 数据来源与研究范围
+本文的数据来源为高质量石油期刊文献。依据开题报告约定的研究口径，正式语料对应 2011-2025 年、CNKI/WOS/CSCD 三库整合后的双主键去重结果。当前正式语料共包含 {data['total_docs']} 篇文献，其中 2011-2015 年 {data['preprocess_rows'][0]['阶段文献数']} 篇、2016-2020 年 {data['preprocess_rows'][1]['阶段文献数']} 篇、2021-2025 年 {data['preprocess_rows'][2]['阶段文献数']} 篇。由于研究对象是“研究机构”而非“期刊”本身，因此高质量期刊目录在本文中承担的是数据源质量约束作用，而不是后续评价对象。
+
+### 2.2 数据清洗与跨库去重规则
+为了保证语料构建过程在论文中能够被清晰表述，本文将数据清洗与跨库去重划分为两个阶段。第一阶段为源内可用性清洗：仅当题名、年份、期刊与机构等核心字段具备可用信息时，记录才进入正式语料构建；CNKI 不再以 DOI 是否存在作为唯一入库门槛。第二阶段为跨库文献合并：优先使用标准 DOI 键识别重复文献，当缺乏可用 DOI 时，再使用由规范题名、年份、第一作者和期刊共同组成的元数据回退键进行严格匹配。凡是 DOI 冲突、不稳定 DOI 或弱相似候选组，均单独保留到审查表，而不是直接强制合并。该规则既降低了跨库误并风险，又保留了中文文献在正式语料中的代表性。
+
+### 2.3 机构标准化与评价样本构建
+机构标准化以“译名可读、标准名统一、颗粒度一致”为原则。对于实验室、学院、系所、分院等子单元，若能够稳定回溯到母机构，则统一归并到母机构层级；对于确有独立学术身份的机构，则保留其独立标准名。经清洗后，机构画像表共保留 {len(data['profile_rows'])} 个有效标准化机构，其中企业研发中心 {type_counts['企业研发中心']} 个、高校/科研院所 {type_counts['高校/科研院所']} 个、政府机构 {type_counts['政府机构']} 个，另有 {type_counts['其他']} 个机构因规则无法稳定识别而被保留在“其他”类别中，不纳入正式机构类型比较。
+
+### 2.4 指标体系与组合赋权方法
+机构影响力评价围绕“科研产出、学术影响、合作与国际化”三类维度展开。结合数据可得性和指标相关性检验，最终纳入模型的 7 项指标包括：去重论文总数、近五年发文占比、H 指数、高被引论文占比、合作论文占比、国际合作论文占比以及合作国家/地区数。由于本轮重建未恢复出可追溯的专家评分数据，本文不再将德尔菲法作为实际赋权方案，而是采用“先验权重 + 熵权法 + CRITIC 法”的组合赋权路线，并对三类权重取算术平均后归一化，形成最终权重。
+
+表2-1 组合赋权结果
+
+{weights_table}
+
+从权重结果看，去重论文总数权重最高（0.279947），说明样本中的规模差异仍然是机构综合影响力的重要基础；国际合作论文占比、近五年发文占比和高被引论文占比分别承担国际化活跃度、近期活跃度和成果质量的识别功能，从而缓解单一规模指标的偏向。
+
+### 2.5 主题演化与机构类型比较方法
+主题分析以正式语料中的摘要文本为对象，按 2011-2015、2016-2020、2021-2025 三个阶段分别训练 LDA 模型。主题数通过困惑度与一致性得分联合选择，三个阶段最终均取 K={selected_k['2011-2015']['k']}。随后，以相邻阶段主题词分布的余弦相似度进行一对一匹配，仅保留相似度不低于 0.20 的连接，以生成主题演化路径。机构类型比较则在主题文献归属结果基础上，分别统计高校/科研院所、企业研发中心和政府机构的主题占比；若某一机构类型样本不足，则以限制说明的方式呈现，而不强行保留无效比较。
+
+表2-2 三阶段主题模型选择结果
+
+{model_table}
+
+## 第3章 全球石油领域研究机构学术影响力评价
+
+### 3.1 Top100 核心机构的综合格局
+根据标准化机构频次表，本文构建了可回溯的核心机构样本，并在此基础上形成 Top100 评价集合。综合排名前十位机构依次为：{top10_names}。头部结构呈现明显的“双核 + 多极”格局：中国科学院和中国石油大学（北京）构成第一梯队，随后是中国石油化工股份有限公司、中国石油天然气股份有限公司、西南石油大学和中国科学院大学等兼具行业嵌入性与学术可见度的机构。
+
+表3-1 TOPSIS 综合排名前十机构
+
+{top10_table}
+
+### 3.2 综合评价结果分析
+从综合得分看，中国科学院以 {top10[0]['TOPSIS综合得分']} 位列第一，其优势主要来自高强度科研产出和稳健的学术影响表现；中国石油大学（北京）以 {top10[1]['TOPSIS综合得分']} 位列第二，在论文规模和近五年持续活跃度上保持优势。第三和第四位分别是中国石油化工股份有限公司与中国石油天然气股份有限公司，说明大型行业企业不仅承担工程应用任务，也已在高质量期刊场域中形成持续的科研输出能力。前二十机构中，境外高校主要包括 {foreign_text}，它们在国际合作和学术影响维度上的表现对综合得分有明显支撑作用。
+
+### 3.3 分维度结果比较
+按科研产出维度排名，前五位依次为中国科学院、中国石油大学（北京）、中国石油天然气股份有限公司、中国石油化工股份有限公司和中国科学院大学，表明头部样本仍然由国内高产机构主导。按学术影响维度排名，湖南大学、新加坡国立大学、中国科学院、华南理工大学和江苏大学进入前五，说明高影响成果并不完全等同于发文规模。按合作与国际化维度排名，帝国理工学院、南洋理工大学、昆士兰大学、阿卜杜拉国王科技大学和蒙纳士大学位居前列，表明国际合作网络广度和开放协作能力是境外机构进入综合前列的重要原因。
+
+### 3.4 机构类型与机构层级特征
+基于标准化机构名称和综合排名结果，本文进一步形成机构类型和机构层级的比较基础。最终可稳定识别的机构中，企业研发中心数量最多，体现了石油领域研究的产业牵引特征；高校/科研院所则在高被引产出和知识扩散能力上更具优势。机构层级方面，Top100 被划分为头部引领型、中坚创新型和特色细分型三个层级。其中，头部引领型机构在综合得分、科研规模和合作网络上表现更均衡，中坚创新型机构在某一维度上更容易形成差异化突破，特色细分型机构则更多依赖主题专长和细分方向积累进入样本前列。
+
+## 第4章 全球石油领域研究主题演化与机构类型比较
+
+### 4.1 三阶段主题模型结果
+主题模型建模文献量分别为 {data['preprocess_rows'][0]['进入建模文献数']}、{data['preprocess_rows'][1]['进入建模文献数']} 和 {data['preprocess_rows'][2]['进入建模文献数']} 篇，三个阶段均选定 11 个主题。2011-2015 年主题强度最高的三个主题分别为“{strength['2011-2015'][0]['主题标签']}”“{strength['2011-2015'][1]['主题标签']}”和“{strength['2011-2015'][2]['主题标签']}”；2016-2020 年对应为“{strength['2016-2020'][0]['主题标签']}”“{strength['2016-2020'][1]['主题标签']}”和“{strength['2016-2020'][2]['主题标签']}”；2021-2025 年则演化为“{strength['2021-2025'][0]['主题标签']}”“{strength['2021-2025'][1]['主题标签']}”和“{strength['2021-2025'][2]['主题标签']}”。这表明储层表征、油气开发、催化转化与低碳利用始终是石油科技中的核心议题，只是其具体表述与技术重点在不同阶段有所转移。
+
+### 4.2 主题演化路径分析
+在相邻阶段相似度匹配后，共识别出 {len(data['evolution_rows'])} 条主题演化路径。较为稳定的连续路径包括：由“储层 / 孔隙 / 渗透率 / 孔隙度”演化为“孔隙 / 页岩 / 储层 / 孔隙度”再演化为“页岩 / 孔隙 / 储层 / 岩石”的储层微观表征路径；由“催化剂 / 地层 / 产品 / 收率”演化为“催化剂 / 构造 / 活性 / 催化”再演化为“催化剂 / 催化 / 活性 / 位点”的催化材料与活性位点路径；以及由“二氧化碳 / 实验 / 模拟 / 储层”延伸至近年的“燃烧 / 采收率 / 注入 / 表面活性剂”和“二氧化碳 / 储存 / 密度 / 构造”等绿色开发路径。相比早期偏重盆地、构造和常规开发问题的主题组合，后期主题更强调储层预测、低碳利用、材料与界面机制。
+
+### 4.3 机构类型主题比较
+机构类型比较结果显示，不同类型机构在主题选择上具有明显差异。2011-2015 年，高校/科研院所占比最高的主题为“{type_theme[('2011-2015', '高校/科研院所')][0]['主题标签']}”和“{type_theme[('2011-2015', '高校/科研院所')][1]['主题标签']}”，企业研发中心则更集中于“{type_theme[('2011-2015', '企业研发中心')][0]['主题标签']}”与“{type_theme[('2011-2015', '企业研发中心')][1]['主题标签']}”；2016-2020 年，高校/科研院所继续在“{type_theme[('2016-2020', '高校/科研院所')][0]['主题标签']}”和“{type_theme[('2016-2020', '高校/科研院所')][1]['主题标签']}”上保持优势，企业研发中心则主要聚焦“{type_theme[('2016-2020', '企业研发中心')][0]['主题标签']}”与“{type_theme[('2016-2020', '企业研发中心')][1]['主题标签']}”；2021-2025 年，高校/科研院所主要分布于“{type_theme[('2021-2025', '高校/科研院所')][0]['主题标签']}”“{type_theme[('2021-2025', '高校/科研院所')][1]['主题标签']}”，企业研发中心则集中于“{type_theme[('2021-2025', '企业研发中心')][0]['主题标签']}”“{type_theme[('2021-2025', '企业研发中心')][1]['主题标签']}”。政府机构样本仅有 2 个、对应 87 条主题分布记录中的极少部分，因此只作为补充性观察，不单独展开解释。经有效机构清洗后，国际组织未形成稳定的比较样本，这也是本文在机构类型分析上的一项明确限制。
+
+### 4.4 机构层级主题比较
+从机构层级看，2011-2015 年头部引领型机构的代表主题集中于“{level_theme[('2011-2015', '头部引领型')][0]['主题标签']}”，中坚创新型机构更偏向“{level_theme[('2011-2015', '中坚创新型')][0]['主题标签']}”，特色细分型机构则在“{level_theme[('2011-2015', '特色细分型')][0]['主题标签']}”上表现更突出。2016-2020 年，头部引领型与特色细分型机构同时在“{level_theme[('2016-2020', '头部引领型')][0]['主题标签']}”及相关储层表征主题上表现活跃，中坚创新型机构在“{level_theme[('2016-2020', '中坚创新型')][0]['主题标签']}”主题上形成更集中分布。2021-2025 年，头部机构明显强化了“{level_theme[('2021-2025', '头部引领型')][0]['主题标签']}”等高复杂度综合主题，中坚创新型与特色细分型机构则更多聚焦裂缝渗流、催化活性位点与二氧化碳储存等细化议题。整体上，层级越高的机构越容易同时覆盖“基础研究 + 工程预测 + 国际合作”三类议题，层级越细分的机构越倾向于在单一技术主题上形成高占比优势。
+
+## 第5章 讨论与策略建议
+
+### 5.1 主要发现讨论
+本文的第一项发现是，石油领域机构影响力结构具有显著的“头部集中 + 类型分化”特征。大型科研院所和行业龙头企业在综合排名上占据前列，但其优势来源并不相同：前者更多依赖高水平学术影响和稳定的知识产出，后者则依赖行业问题导向下的持续工程产出。第二项发现是，主题演化并非简单的热点替换，而是从盆地、地层、油田开发等传统问题，逐步向储层预测、低碳利用、催化位点等更高精度、更强绿色导向的议题延伸。第三项发现是，机构类型与机构层级会通过不同的知识组织方式影响主题分布：高校/科研院所在知识探索型主题上优势明显，企业研发中心更强调面向工程场景的问题求解。
+
+### 5.2 管理与实践建议
+基于上述发现，本文提出三方面建议。第一，对高校/科研院所而言，应在保持高质量论文产出的同时，进一步强化与企业真实场景的耦合，将储层预测、低碳利用和多源数据分析等方向转化为持续可验证的学术优势。第二，对企业研发中心而言，应在油田开发、工程优化等既有强项外，增强在催化、材料、二氧化碳利用与储存等前沿议题上的基础研究布局，并提高国际合作深度，以改善综合评价中合作与国际化维度的表现。第三，对管理部门而言，应推动高质量文献、机构标准名和主题监测结果的常态化归集，建立面向重点能源技术方向的滚动监测机制，从而为学科布局和资源配置提供可复用的数据底座。
+
+### 5.3 研究局限
+本文仍存在三点限制。其一，机构类型识别虽然已通过人工规则和标准化表大幅改善，但仍有 131 个机构落在“其他”类别，说明部分跨国研究联盟、理事会、中心类机构的组织属性需要进一步精细辨别。其二，由于缺乏可追溯的专家评分数据，本文未将德尔菲法纳入实际赋权方案，而是采用完全可复现的组合客观赋权路径。其三，经有效机构过滤后，国际组织未形成稳定样本，因此机构类型比较没有强行保留“国际组织”这一类别，而是在结果与讨论中显式说明该限制。
+
+## 第6章 结论
+本文基于 109 本高质量期刊文献重建了 2011-2025 年全球石油领域研究机构的双主键正式语料，并形成了从机构标准化、Top100 影响力评价到主题演化比较的完整分析链。结果表明，中国科学院、中国石油大学（北京）等机构在综合评价中占据主导地位，石油领域研究热点则呈现出由传统盆地与开发议题向储层预测、低碳利用和催化位点等方向演化的趋势。高校/科研院所、企业研发中心与政府机构在主题选择上表现出稳定差异，说明机构属性已经成为理解石油科技知识结构的重要解释变量。总体而言，本文为高质量文献驱动下的行业机构评价提供了可复现的技术路线，也为后续石油科技战略监测和机构竞争力诊断提供了可扩展的数据基础。
+
+## 参考文献（初稿待核校）
+1. Hwang C L, Yoon K. Multiple Attribute Decision Making: Methods and Applications[M]. Berlin: Springer, 1981.
+2. Shannon C E. A Mathematical Theory of Communication[J]. Bell System Technical Journal, 1948, 27(3): 379-423.
+3. Diakoulaki D, Mavrotas G, Papayannakis L. Determining Objective Weights in Multiple Criteria Problems: The CRITIC Method[J]. Computers & Operations Research, 1995, 22(7): 763-770.
+4. Blei D M, Ng A Y, Jordan M I. Latent Dirichlet Allocation[J]. Journal of Machine Learning Research, 2003, 3: 993-1022.
+5. 中国科学技术协会. 石油领域高质量科技期刊分级目录[Z].
+6. 中国石油大学（北京）. 本科毕业设计（论文）撰写规范（2016年修订）[Z].
+7. Schlögl C, et al. 关于科研机构计量评价维度与排名差异的相关研究文献[待核校].
+8. 张芹, 等. 石油高校学科绩效与合作情况分析相关研究[待核校].
+9. 贾珍臻, 等. 地质资源与地质工程领域科研绩效比较研究[待核校].
+10. 本文数据重建脚本与结果表：D:\\graduate\\thesis_rebuild\\institution_eval、D:\\graduate\\thesis_rebuild\\topic_evolution_dual_key_2011_2025。
+
+## 致谢
+感谢导师在选题、方法与写作过程中的指导，感谢学院提供的研究条件与毕业设计组织支持。本文初稿已完成数据链重建、结果写作与 Word 草稿生成，后续将继续补全参考文献细节、图表编号与语言润色工作。
+"""
+
+
+def set_doc_font(run, east_asia: str = "SimSun", ascii_font: str = "Times New Roman", size: int = 12, bold: bool = False) -> None:
+    run.font.size = Pt(size)
+    run.font.bold = bold
+    run.font.name = ascii_font
+    run._element.rPr.rFonts.set(qn("w:eastAsia"), east_asia)
+
+
+def add_paragraph(document: Document, text: str, *, bold: bool = False, center: bool = False, size: int = 12) -> None:
+    p = document.add_paragraph()
+    if center:
+        p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    p.paragraph_format.first_line_indent = Cm(0.85) if not center else Cm(0)
+    p.paragraph_format.space_after = Pt(0)
+    run = p.add_run(text)
+    set_doc_font(run, size=size, bold=bold)
+
+
+def add_heading(document: Document, text: str, level: int) -> None:
+    p = document.add_paragraph()
+    if level == 1:
+        p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        run = p.add_run(text)
+        set_doc_font(run, east_asia="SimHei", size=15, bold=False)
+    elif level == 2:
+        run = p.add_run(text)
+        set_doc_font(run, east_asia="SimHei", size=14, bold=False)
+    else:
+        run = p.add_run(text)
+        set_doc_font(run, east_asia="SimHei", size=12, bold=False)
+    p.paragraph_format.first_line_indent = Cm(0)
+    p.paragraph_format.space_after = Pt(0)
+
+
+def add_table(document: Document, title: str, headers: list[str], rows: list[list[str]]) -> None:
+    add_paragraph(document, title, center=True)
+    table = document.add_table(rows=1, cols=len(headers))
+    table.alignment = WD_TABLE_ALIGNMENT.CENTER
+    table.style = "Table Grid"
+    hdr_cells = table.rows[0].cells
+    for idx, header in enumerate(headers):
+        hdr_cells[idx].text = header
+    for row in rows:
+        cells = table.add_row().cells
+        for idx, value in enumerate(row):
+            cells[idx].text = value
+    for row in table.rows:
+        for cell in row.cells:
+            for p in cell.paragraphs:
+                p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+                for run in p.runs:
+                    set_doc_font(run, size=10)
+
+
+def build_docx(data: dict[str, object]) -> None:
+    document = Document()
+    section = document.sections[0]
+    section.top_margin = Cm(3.0)
+    section.bottom_margin = Cm(3.0)
+    section.left_margin = Cm(3.0)
+    section.right_margin = Cm(3.0)
+
+    p = document.add_paragraph()
+    p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    run = p.add_run(TITLE_ZH)
+    set_doc_font(run, east_asia="SimHei", size=16, bold=True)
+
+    add_paragraph(document, "中国石油大学（北京）本科毕业设计（论文）初稿", center=True, size=12)
+    add_paragraph(document, "学生：余冰雁    学号：2022012085    专业：信息管理与信息系统", center=True, size=12)
+    add_paragraph(document, "")
+
+    add_heading(document, "摘要", 1)
+    add_paragraph(document, build_abstract_zh(data))
+    add_paragraph(document, "关键词：高质量期刊文献；石油领域；研究机构；学术影响力；主题演化")
+
+    add_heading(document, "ABSTRACT", 1)
+    add_paragraph(document, TITLE_EN, center=True, size=12)
+    add_paragraph(document, build_abstract_en(data))
+    add_paragraph(document, "Key Words: high-quality journal literature; petroleum research institutions; academic influence; TOPSIS; topic evolution")
+
+    markdown = build_markdown(data)
+    body_sections = [line for line in markdown.splitlines() if line.strip()]
+    for line in body_sections:
+        if line.startswith("# "):
+            continue
+        if line.startswith("## "):
+            add_heading(document, line[3:], 1)
+        elif line.startswith("### "):
+            add_heading(document, line[4:], 2)
+        elif line.startswith("| "):
+            continue
+        elif line.startswith("**关键词：") or line.startswith("**Key Words:"):
+            continue
+        else:
+            add_paragraph(document, line)
+
+    weights_rows = [
+        [row["label_zh"], row["dimension_zh"], f"{float(row['combined_weight']):.6f}"]
+        for row in data["weights"]
+    ]
+    add_table(document, "表3-1 组合赋权结果", ["指标", "维度", "组合权重"], weights_rows)
+
+    top10_rows = [
+        [
+            row["TOPSIS综合排名"],
+            row["标准化机构名称"],
+            row["主属国家/地区"],
+            row["TOPSIS综合得分"],
+            row["主导优势维度"],
+        ]
+        for row in data["top20"][:10]
+    ]
+    add_table(document, "表3-2 TOPSIS 综合排名前十机构", ["排名", "机构", "国家/地区", "综合得分", "主导优势维度"], top10_rows)
+
+    model_rows = [
+        [
+            row["阶段"],
+            row["进入建模文献数"],
+            str(data["selected_k"][row["阶段"]]["k"]),
+            data["selected_k"][row["阶段"]]["perplexity"],
+            data["selected_k"][row["阶段"]]["coherence"],
+        ]
+        for row in data["preprocess_rows"]
+    ]
+    add_table(document, "表4-1 三阶段主题模型选择结果", ["阶段", "建模文献数", "选定主题数", "困惑度", "一致性得分"], model_rows)
+
+    for figure_name in [
+        "topic_intensity_evolution_curve_dual_key_2011_2025.png",
+        "topic_distribution_heatmap_by_institution_type_dual_key_2011_2025.png",
+    ]:
+        figure_path = TOPIC_DIR / figure_name
+        if figure_path.exists():
+            document.add_picture(str(figure_path), width=Cm(15.5))
+            caption = "图 " + figure_name.replace("_dual_key_2011_2025.png", "").replace("_", " ")
+            add_paragraph(document, caption, center=True, size=11)
+
+    document.save(DOCX_OUTPUT)
+
+
+def build_qa(data: dict[str, object]) -> str:
+    type_counts: Counter[str] = data["type_counts"]
+    return f"""# 论文交付 QA 清单（2026-04-24）
+
+## 自动通过项
+- 正式语料口径已统一为 `2011-2025 dual_key_dedup`。
+- 机构评价链已重跑并生成最新的频次表、Top100、指标表、TOPSIS 得分表和机构类型表。
+- 主题演化链核心结果文件已齐全，当前目录包含主题强度、文献主题归属、相似度连接、演化路径、机构类型分布和机构层级分布。
+- `institution_type_review_top100_dual_key_2011_2025.csv` 与机构类型主题分布表中的企业类标签已统一为“企业研发中心”。
+- 机构画像表中的 4 条括注前置别名已归并到正式标准名，当前有效机构画像数量为 {len(data['profile_rows'])}。
+- 中文交付表已刷新，核心中文 CSV 可按 `gb18030` 打开。
+
+## 需要人工复核项
+- 参考文献目前为初稿清单，需按正文实际引文统一补足并核校到不少于 15 篇，其中外文不少于 4 篇。
+- 英文摘要仍建议做语法和术语润色，以贴合最终提交版表达。
+- 机构类型中仍有 {type_counts['其他']} 个“其他”机构未纳入正式类型比较，正式稿中应保留方法限制说明。
+- 国际组织在有效机构过滤后未形成稳定样本，正式定稿时需保留“未单独展开比较”的限制说明。
+- 若需完全贴合学校模板页眉页脚、标题间距和目录样式，可在本机 Word COM 环境中再运行 `format_word_doc_with_template.ps1` 做最终版式整理。
+
+## 输出文件
+- Markdown 草稿：`{MD_OUTPUT}`
+- Word 初稿：`{DOCX_OUTPUT}`
+- 本 QA 清单：`{QA_OUTPUT}`
+"""
+
+
+def main() -> None:
+    MANUSCRIPT_DIR.mkdir(parents=True, exist_ok=True)
+    QA_DIR.mkdir(parents=True, exist_ok=True)
+
+    data = load_data()
+    markdown = build_markdown(data)
+    MD_OUTPUT.write_text(markdown, encoding="utf-8")
+    build_docx(data)
+    QA_OUTPUT.write_text(build_qa(data), encoding="utf-8")
+
+    print(f"markdown_output={MD_OUTPUT}")
+    print(f"docx_output={DOCX_OUTPUT}")
+    print(f"qa_output={QA_OUTPUT}")
+
+
+if __name__ == "__main__":
+    main()

@@ -80,6 +80,7 @@ RE_ADDRESS_HINT = re.compile(r"(?<![a-z])(?:road|rd|street|st|avenue|ave|bouleva
 RE_ADDRESS_STYLE_NAME = re.compile(r"^(?:no\s*)?\d+[a-z0-9]*(?:\s+[a-z0-9]+){0,4}$")
 RE_NUMERIC_SUBUNIT = re.compile(r"^\d+(?:st|nd|rd|th)?\s+")
 RE_LEADING_DIGITS = re.compile(r"^\d{2,}")
+RE_LEADING_PARENTHETICAL_LOCATION = re.compile(r"^[\(\uff08]([^\)\uff09]{1,12})[\)\uff09](.+)$")
 GENERIC_SUBUNIT_HINTS = ("drilling", "exploration", "production", "team", "plant", "factory", "workshop", "branch", "crew", "unit", "company", "co", "division")
 NOISE_MARKERS_CN = ("编辑部", "编委会", "指导委员会", "项目部", "工程科", "研究科", "办公室")
 NOISE_MARKERS_EN = ("editorial office", "editorial board", "committee office", "working group")
@@ -100,6 +101,38 @@ SAFE_MAPPING_METHODS = {
     "规则稳定译名",
 }
 BLOCKED_MAPPING_SENTINEL = "__blocked_norm__"
+
+GOVERNMENT_EXACT_NAMES.update(
+    {
+        "\u4e2d\u56fd\u6559\u80b2\u90e8",
+        "\u6559\u80b2\u90e8",
+        "\u4e2d\u534e\u4eba\u6c11\u5171\u548c\u56fd\u6559\u80b2\u90e8",
+        "\u4e2d\u56fd\u81ea\u7136\u8d44\u6e90\u90e8",
+        "\u4e2d\u534e\u4eba\u6c11\u5171\u548c\u56fd\u81ea\u7136\u8d44\u6e90\u90e8",
+        "\u4e2d\u534e\u4eba\u6c11\u5171\u548c\u56fd\u5e94\u6025\u7ba1\u7406\u90e8",
+        "\u4e2d\u534e\u4eba\u6c11\u5171\u548c\u56fd\u751f\u6001\u73af\u5883\u90e8",
+        "\u56fd\u5bb6\u6d77\u6d0b\u5c40",
+        "\u7f8e\u56fd\u56fd\u5bb6\u6807\u51c6\u4e0e\u6280\u672f\u7814\u7a76\u9662",
+        "\u52a0\u62ff\u5927\u519c\u4e1a\u4e0e\u519c\u4e1a\u98df\u54c1\u90e8",
+        "\u6cf0\u56fd\u56fd\u5bb6\u79d1\u5b66\u6280\u672f\u53d1\u5c55\u7f72",
+        "\u65e5\u672c\u79d1\u5b66\u6280\u672f\u632f\u5174\u673a\u6784",
+    }
+)
+
+INSTITUTION_TYPE_ALIASES = {
+    "\u4f01\u4e1a\u7814\u53d1\u673a\u6784": "\u4f01\u4e1a\u7814\u53d1\u4e2d\u5fc3",
+}
+
+DIRECT_CANONICAL_ALIASES = {
+    "(\u5317\u4eac)\u4e2d\u56fd\u77f3\u6cb9\u5927\u5b66": "\u4e2d\u56fd\u77f3\u6cb9\u5927\u5b66\uff08\u5317\u4eac\uff09",
+    "(\u5317\u4eac)\u4e2d\u56fd\u77ff\u4e1a\u5927\u5b66": "\u4e2d\u56fd\u77ff\u4e1a\u5927\u5b66\uff08\u5317\u4eac\uff09",
+    "(\u5f90\u5dde)\u4e2d\u56fd\u77ff\u4e1a\u5927\u5b66": "\u4e2d\u56fd\u77ff\u4e1a\u5927\u5b66",
+    "(\u6b66\u6c49)\u4e2d\u56fd\u5730\u8d28\u5927\u5b66": "\u4e2d\u56fd\u5730\u8d28\u5927\u5b66\uff08\u6b66\u6c49\uff09",
+    "\uff08\u5317\u4eac\uff09\u4e2d\u56fd\u77f3\u6cb9\u5927\u5b66": "\u4e2d\u56fd\u77f3\u6cb9\u5927\u5b66\uff08\u5317\u4eac\uff09",
+    "\uff08\u5317\u4eac\uff09\u4e2d\u56fd\u77ff\u4e1a\u5927\u5b66": "\u4e2d\u56fd\u77ff\u4e1a\u5927\u5b66\uff08\u5317\u4eac\uff09",
+    "\uff08\u5f90\u5dde\uff09\u4e2d\u56fd\u77ff\u4e1a\u5927\u5b66": "\u4e2d\u56fd\u77ff\u4e1a\u5927\u5b66",
+    "\uff08\u6b66\u6c49\uff09\u4e2d\u56fd\u5730\u8d28\u5927\u5b66": "\u4e2d\u56fd\u5730\u8d28\u5927\u5b66\uff08\u6b66\u6c49\uff09",
+}
 
 OUTPUT_FILE_TEMPLATES = {
     "institution_profile_classification": "institution_profile_classification_{dataset_tag}_2011_2025.csv",
@@ -131,6 +164,16 @@ def write_text(path: Path, lines: list[str]) -> None:
     path.write_text("\n".join(lines), encoding=OUTPUT_ENCODING)
 
 
+def normalize_institution_type_label(value: object) -> str:
+    text = compact_text(value)
+    return INSTITUTION_TYPE_ALIASES.get(text, text)
+
+
+def apply_direct_canonical_alias(value: object) -> str:
+    text = compact_text(value)
+    return DIRECT_CANONICAL_ALIASES.get(text, text)
+
+
 def english_tokens(text: str) -> set[str]:
     return set(re.findall(r"[a-z][a-z0-9&-]*", text.lower()))
 
@@ -143,6 +186,24 @@ def normalize_lookup_key(value: object) -> str:
     text = text.lower()
     text = re.sub(r"[\s\-_/.,;:()]+", " ", text)
     return text.strip()
+
+
+MANUAL_INSTITUTION_ALIASES.update(
+    {
+        normalize_lookup_key("\uff08\u5317\u4eac\uff09\u4e2d\u56fd\u77f3\u6cb9\u5927\u5b66"): "\u4e2d\u56fd\u77f3\u6cb9\u5927\u5b66\uff08\u5317\u4eac\uff09",
+        normalize_lookup_key("(\u5317\u4eac)\u4e2d\u56fd\u77f3\u6cb9\u5927\u5b66"): "\u4e2d\u56fd\u77f3\u6cb9\u5927\u5b66\uff08\u5317\u4eac\uff09",
+        normalize_lookup_key("\u4e2d\u56fd\u77f3\u6cb9\u5927\u5b66\uff08\u5317\u4eac\uff09"): "\u4e2d\u56fd\u77f3\u6cb9\u5927\u5b66\uff08\u5317\u4eac\uff09",
+        normalize_lookup_key("\uff08\u5317\u4eac\uff09\u4e2d\u56fd\u77ff\u4e1a\u5927\u5b66"): "\u4e2d\u56fd\u77ff\u4e1a\u5927\u5b66\uff08\u5317\u4eac\uff09",
+        normalize_lookup_key("(\u5317\u4eac)\u4e2d\u56fd\u77ff\u4e1a\u5927\u5b66"): "\u4e2d\u56fd\u77ff\u4e1a\u5927\u5b66\uff08\u5317\u4eac\uff09",
+        normalize_lookup_key("\u4e2d\u56fd\u77ff\u4e1a\u5927\u5b66\uff08\u5317\u4eac\uff09"): "\u4e2d\u56fd\u77ff\u4e1a\u5927\u5b66\uff08\u5317\u4eac\uff09",
+        normalize_lookup_key("\uff08\u5f90\u5dde\uff09\u4e2d\u56fd\u77ff\u4e1a\u5927\u5b66"): "\u4e2d\u56fd\u77ff\u4e1a\u5927\u5b66",
+        normalize_lookup_key("(\u5f90\u5dde)\u4e2d\u56fd\u77ff\u4e1a\u5927\u5b66"): "\u4e2d\u56fd\u77ff\u4e1a\u5927\u5b66",
+        normalize_lookup_key("\u4e2d\u56fd\u77ff\u4e1a\u5927\u5b66\uff08\u5f90\u5dde\uff09"): "\u4e2d\u56fd\u77ff\u4e1a\u5927\u5b66",
+        normalize_lookup_key("\uff08\u6b66\u6c49\uff09\u4e2d\u56fd\u5730\u8d28\u5927\u5b66"): "\u4e2d\u56fd\u5730\u8d28\u5927\u5b66\uff08\u6b66\u6c49\uff09",
+        normalize_lookup_key("(\u6b66\u6c49)\u4e2d\u56fd\u5730\u8d28\u5927\u5b66"): "\u4e2d\u56fd\u5730\u8d28\u5927\u5b66\uff08\u6b66\u6c49\uff09",
+        normalize_lookup_key("\u4e2d\u56fd\u5730\u8d28\u5927\u5b66\uff08\u6b66\u6c49\uff09"): "\u4e2d\u56fd\u5730\u8d28\u5927\u5b66\uff08\u6b66\u6c49\uff09",
+    }
+)
 
 
 def strip_institution_quotes(value: object) -> str:
@@ -228,6 +289,18 @@ def has_noise_marker(name: str) -> bool:
     return any(contains_english_keyword(normalized, marker) for marker in NOISE_MARKERS_EN)
 
 
+def swap_leading_parenthetical_location(name: str) -> str:
+    text = strip_institution_quotes(name)
+    match = RE_LEADING_PARENTHETICAL_LOCATION.match(text)
+    if not match:
+        return ""
+    location = compact_text(match.group(1))
+    body = compact_text(match.group(2))
+    if not location or not body:
+        return ""
+    return f"{body}\uff08{location}\uff09"
+
+
 def lookup_mapped_institution_name(name: str, raw_to_norm: dict[str, str]) -> str:
     exact = compact_text(raw_to_norm.get(compact_text(name), ""))
     if exact:
@@ -242,6 +315,15 @@ def lookup_mapped_institution_name(name: str, raw_to_norm: dict[str, str]) -> st
                 normalized = compact_text(mapped_value)
                 if normalized:
                     return normalized
+    swapped = swap_leading_parenthetical_location(name)
+    if swapped:
+        swapped_key = normalize_lookup_key(swapped)
+        swapped_mapped = compact_text(raw_to_norm.get(swapped, "")) or compact_text(raw_to_norm.get(swapped_key, ""))
+        if swapped_mapped:
+            return swapped_mapped
+        alias_swapped = MANUAL_INSTITUTION_ALIASES.get(swapped_key, "")
+        if alias_swapped:
+            return alias_swapped
     return MANUAL_INSTITUTION_ALIASES.get(normalized_key, "")
 
 
@@ -264,7 +346,7 @@ def score_resolved_institution_name(original: str, candidate: str, resolved: str
 
 
 def clean_standardized_institution_name(name: str, raw_to_norm: dict[str, str]) -> str:
-    text = strip_institution_quotes(name)
+    text = apply_direct_canonical_alias(strip_institution_quotes(name))
     if len(text) < 2 or not re.search(r"[A-Za-z\u4e00-\u9fff]", text):
         return ""
 
@@ -442,7 +524,7 @@ def load_review_overrides(path: Path) -> dict[str, dict[str, object]]:
             institution = compact_text(row.get("标准化机构名称", ""))
             if institution:
                 overrides[institution] = {
-                    "institution_type": compact_text(row.get("机构类型", "")),
+                    "institution_type": normalize_institution_type_label(row.get("机构类型", "")),
                     "classification_basis": compact_text(row.get("分类依据", "")),
                     "institution_level": compact_text(row.get("机构层级", "")),
                     "topsis_rank": int(compact_text(row.get("TOPSIS综合排名", "0")) or 0),

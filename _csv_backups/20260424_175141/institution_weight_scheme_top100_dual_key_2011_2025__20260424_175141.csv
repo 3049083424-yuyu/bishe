@@ -1,0 +1,8 @@
+field,label_zh,dimension,dimension_zh,direction,prior_weight,entropy_weight,critic_weight,combined_weight
+distinct_paper_count,去重论文总数,research_output,科研产出,benefit,0.166667,0.528795,0.150246,0.281903
+recent_paper_ratio_2021_2025,近五年发文占比,research_output,科研产出,benefit,0.166667,0.062667,0.182119,0.137151
+h_index,H指数,academic_impact,学术影响,benefit,0.166667,0.072513,0.100062,0.113081
+high_cited_paper_ratio,高被引论文占比,academic_impact,学术影响,benefit,0.166667,0.078923,0.126715,0.124101
+collaboration_paper_ratio,合作论文占比,collaboration_international,合作与国际化,benefit,0.111111,0.065553,0.165587,0.114084
+international_collaboration_paper_ratio,国际合作论文占比,collaboration_international,合作与国际化,benefit,0.111111,0.147748,0.167107,0.141989
+partner_country_region_count,合作国家/地区数,collaboration_international,合作与国际化,benefit,0.111111,0.0438,0.108164,0.087692

@@ -1,0 +1,407 @@
+机构原始名称,机构译名,机构标准名,规则来源,备注,映射方式
+SINOPEC Research Institute of Petroleum Processing,中国石化石油化工科学研究院,中国石油化工股份有限公司,用户复核,企业研究院归并至母公司
+Shanghai Inst Technol,上海应用技术大学,上海应用技术大学,用户复核并核名,采用学校现用官方中文名
+中国石油大学化学工程学院,中国石油大学化学工程学院,中国石油大学（北京）,用户复核,未注明华东时默认归并北京
+中国地质大学资源学院,中国地质大学资源学院,中国地质大学（武汉）,用户复核,按学院隶属校区归并
+中国石油大学理学院,中国石油大学理学院,中国石油大学（北京）,用户复核,未注明华东时默认归并北京
+中国石油大学机械与储运工程学院,中国石油大学机械与储运工程学院,中国石油大学（北京）,用户复核,未注明华东时默认归并北京
+Natl Inst Technol,美国国家标准与技术研究院,美国国家标准与技术研究院,用户复核并核名,按当前任务口径统一为美国国家标准与技术研究院
+Inst Chem Technol,印度化学技术学院,印度化学技术学院,用户复核并核名,按 Institute of Chemical Technology 译名统一
+中国石油大学地球科学学院,中国石油大学地球科学学院,中国石油大学（北京）,用户复核,未注明华东时默认归并北京
+中国地质大学能源学院,中国地质大学能源学院,中国地质大学（北京）,用户复核,按学院隶属校区归并
+Natl Tech Univ Athens,希腊雅典国立理工大学,希腊雅典国立理工大学,用户复核并核名,按学校官方英文名统一
+Institute of Geology and Geophysics,中国科学院地质与地球物理研究所,中国科学院,用户复核并核名,中科院下属研究所归并至中国科学院
+Natl Energy Technol Lab,美国国家能源技术实验室,美国国家能源技术实验室,用户复核并核名,美国能源部国家实验室
+中国石油大学重质油国家重点实验室,重质油国家重点实验室,重质油国家重点实验室,用户复核,独立科研平台保留平台级标准名
+中国石油大学储运与建筑工程学院,中国石油大学储运与建筑工程学院,中国石油大学（北京）,用户复核,未注明华东时默认归并北京
+Univ Sci & Technol,中国科学技术大学,中国科学技术大学,用户复核,按当前高频语境归并至中科大
+Exploration and Development Research Institute,中国石油勘探开发研究院,中国石油天然气股份有限公司,当前正式口径,企业研究院归并至母公司
+Harbin Engn Univ,哈尔滨工程大学,哈尔滨工程大学,官网核名,学校官方英文名为 Harbin Engineering University
+China Three Gorges Univ,三峡大学,三峡大学,官网核名,学校官方英文名为 China Three Gorges University
+Sichuan Univ Sci & Engn,四川轻化工大学,四川轻化工大学,官网核名,学校现用官方中文名
+Univ Fed Ceara,塞阿拉联邦大学,塞阿拉联邦大学,官网核名,官方葡文名为 Universidade Federal do Ceará
+Univ Vigo,维戈大学,维戈大学,官网核名,学校官方英文名为 University of Vigo
+Univ Strasbourg,斯特拉斯堡大学,斯特拉斯堡大学,官网核名,学校官方英文名为 University of Strasbourg
+Univ Limerick,利默里克大学,利默里克大学,官网核名,学校官方英文名为 University of Limerick
+Michigan Technol Univ,密歇根理工大学,密歇根理工大学,官网核名,学校官方英文名为 Michigan Technological University
+Natl Res Council Canada,加拿大国家研究委员会,加拿大国家研究委员会,官网核名,加拿大联邦政府科研机构
+Beijing Inst Petrochem Technol,北京石油化工学院,北京石油化工学院,官网核名,学校官方英文名为 Beijing Institute of Petrochemical Technology
+Ulsan Natl Inst Sci & Technol,蔚山科学技术院,蔚山科学技术院,官网核名,学校官方英文名为 Ulsan National Institute of Science and Technology
+Univ Fed Sao Carlos,圣卡洛斯联邦大学,圣卡洛斯联邦大学,官网核名,官方葡文名为 Universidade Federal de São Carlos
+Zhejiang A&F Univ,浙江农林大学,浙江农林大学,官网核名,学校官方英文名为 Zhejiang A&F University
+China Natl Offshore Oil Corp,中国海洋石油集团有限公司,中国海洋石油集团有限公司,官网核名,官方英文名对应集团母公司
+CNOOC Res Inst Co Ltd,中海油研究总院有限责任公司,中国海洋石油有限公司,官网核名并归并,研究机构归并至中国海油有限公司
+CNOOC Ltd,中国海洋石油有限公司,中国海洋石油有限公司,官网核名,按公司官方中英文名统一
+Tianjin Branch of CNOOC Ltd,中国海洋石油有限公司天津分公司,中国海洋石油有限公司,官网核名并归并,分公司归并至中国海油有限公司
+Tarim Oilfield Company,中国石油塔里木油田公司,中国石油天然气股份有限公司,官网核名并归并,油田公司归并至中国石油天然气股份有限公司
+PetroChina Southwest Oil & Gasfield Co,中国石油西南油气田公司,中国石油天然气股份有限公司,官网核名并归并,油气田公司归并至中国石油天然气股份有限公司
+PetroChina Southwest Oil & Gas Field Co,中国石油西南油气田公司,中国石油天然气股份有限公司,官网核名并归并,油气田公司归并至中国石油天然气股份有限公司
+PetroChina Co Ltd,中国石油天然气股份有限公司,中国石油天然气股份有限公司,官网核名,按公司官方中英文名统一
+China University of Geosciences(Wuhan),中国地质大学（武汉）,中国地质大学（武汉）,官网核名,学校官方英文名含校区
+China University of Geosciences (Wuhan),中国地质大学（武汉）,中国地质大学（武汉）,官网核名,学校官方英文名含校区
+Nanjing Agr Univ,南京农业大学,南京农业大学,高频补齐,高频缩写人工补齐
+Aix Marseille Univ,艾克斯-马赛大学,艾克斯-马赛大学,高频补齐,高频缩写人工补齐
+Univ Grenoble Alpes,格勒诺布尔-阿尔卑斯大学,格勒诺布尔-阿尔卑斯大学,高频补齐,高频缩写人工补齐
+Chungbuk Natl Univ,忠北国立大学,忠北国立大学,高频补齐,高频缩写人工补齐
+King Khalid Univ,哈立德国王大学,哈立德国王大学,高频补齐,高频缩写人工补齐
+Univ Oulu,奥卢大学,奥卢大学,高频补齐,高频缩写人工补齐
+Loughborough Univ,拉夫堡大学,拉夫堡大学,高频补齐,高频缩写人工补齐
+Kangwon Natl Univ,江原国立大学,江原国立大学,高频补齐,高频缩写人工补齐
+Hamburg Univ Technol,汉堡工业大学,汉堡工业大学,高频补齐,高频缩写人工补齐
+Univ Glasgow,格拉斯哥大学,格拉斯哥大学,高频补齐,高频缩写人工补齐
+China Pharmaceut Univ,中国药科大学,中国药科大学,高频补齐,高频缩写人工补齐
+Univ Fed Rio Grande do Norte,北大河州联邦大学,北大河州联邦大学,高频补齐,高频缩写人工补齐
+Univ Fed Sao Carlos,圣卡洛斯联邦大学,圣卡洛斯联邦大学,官网核名,重复项用于稳定覆盖
+Idaho Natl Lab,爱达荷国家实验室,爱达荷国家实验室,高频补齐,高频缩写人工补齐
+Univ Nottingham Ningbo China,宁波诺丁汉大学,宁波诺丁汉大学,高频补齐,高频缩写人工补齐
+Taiyuan Univ Sci & Technol,太原科技大学,太原科技大学,高频补齐,高频缩写人工补齐
+TU Dortmund Univ,多特蒙德工业大学,多特蒙德工业大学,高频补齐,高频缩写人工补齐
+Nanjing Univ Technol,南京工业大学,南京工业大学,高频补齐,高频缩写人工补齐
+Korea Inst Sci & Technol KIST,韩国科学技术研究院,韩国科学技术研究院,高频补齐,高频缩写人工补齐
+Karlsruhe Inst Technol KIT,卡尔斯鲁厄理工学院,卡尔斯鲁厄理工学院,高频补齐,高频缩写人工补齐
+Royal Inst Technol,瑞典皇家理工学院,瑞典皇家理工学院,高频补齐,高频缩写人工补齐
+Beijing Technol & Business Univ,北京工商大学,北京工商大学,高频补齐,高频缩写人工补齐
+Vellore Inst Technol,韦洛尔理工学院,韦洛尔理工学院,高频补齐,高频缩写人工补齐
+Univ Texas Arlington,得克萨斯大学阿灵顿分校,得克萨斯大学阿灵顿分校,高频补齐,高频缩写人工补齐
+Vrije Univ Brussel,布鲁塞尔自由大学,布鲁塞尔自由大学,高频补齐,高频缩写人工补齐
+Univ Oviedo,奥维耶多大学,奥维耶多大学,高频补齐,高频缩写人工补齐
+Univ Minho,米尼奥大学,米尼奥大学,高频补齐,高频缩写人工补齐
+Univ Ulsan,蔚山大学,蔚山大学,高频补齐,高频缩写人工补齐
+Univ Rostock,罗斯托克大学,罗斯托克大学,高频补齐,高频缩写人工补齐
+Sungkyunkwan Univ SKKU,成均馆大学,成均馆大学,高频补齐,高频缩写人工补齐
+Paul Scherrer Inst,保罗谢勒研究所,保罗谢勒研究所,高频补齐,高频缩写人工补齐
+Jadavpur Univ,贾达普大学,贾达普大学,高频补齐,高频缩写人工补齐
+Gubkin Univ,古勃金俄罗斯国立石油天然气大学,古勃金俄罗斯国立石油天然气大学,高频补齐,高频缩写人工补齐
+IM Gubkin Russian State Univ Oil & Gas,古勃金俄罗斯国立石油天然气大学,古勃金俄罗斯国立石油天然气大学,高频补齐,高频缩写人工补齐
+Beijing Univ Civil Engn & Architecture,北京建筑大学,北京建筑大学,高频补齐,高频缩写人工补齐
+Liaoning Tech Univ,辽宁工程技术大学,辽宁工程技术大学,高频补齐,高频缩写人工补齐
+Changchun Univ Sci & Technol,长春理工大学,长春理工大学,高频补齐,高频缩写人工补齐
+Qufu Normal Univ,曲阜师范大学,曲阜师范大学,高频补齐,高频缩写人工补齐
+Nantong Univ,南通大学,南通大学,高频补齐,高频缩写人工补齐
+Ajou Univ,亚洲大学（韩国）,亚洲大学（韩国）,高频补齐,高频缩写人工补齐
+Wuyi Univ,五邑大学,五邑大学,高频补齐,高频缩写人工补齐
+Langfang Branch,中国石油勘探开发研究院廊坊分院,中国石油天然气股份有限公司,同族归并,按同族高频变体统一到中石油勘探开发研究院体系
+Geophysical Research Institute,中国石化地球物理研究院,中国石油化工股份有限公司,同族归并,按 Sinopec Geophysical Research Institute 同族高频变体归并
+Foshan Univ,佛山大学,佛山大学,官网核名,采用学校现用官方中文名
+Lappeenranta Univ Technol,拉彭兰塔理工大学,拉彭兰塔理工大学,高频补齐,按机构原始英文名对应中文常用译名
+Ton Duc Thang Univ,孙德胜大学,孙德胜大学,高频补齐,高频缩写人工补齐
+Washington Univ,圣路易斯华盛顿大学,圣路易斯华盛顿大学,高频补齐,按英文词序区分 Washington University
+Univ Washington,华盛顿大学（美国）,华盛顿大学（美国）,高频补齐,按英文词序区分 University of Washington
+Western Univ,西安大略大学,西安大略大学,高频补齐,按学校现用英文名统一
+Univ Malaysia Pahang,马来西亚彭亨大学,马来西亚彭亨大学,高频补齐,高频缩写人工补齐
+Natl Res Tomsk Polytech Univ,托木斯克理工大学,托木斯克理工大学,高频补齐,高频缩写人工补齐
+Univ Kebangsaan Malaysia,马来西亚国民大学,马来西亚国民大学,高频补齐,高频缩写人工补齐
+Univ Isfahan,伊斯法罕大学,伊斯法罕大学,高频补齐,高频缩写人工补齐
+Macquarie Univ,麦考瑞大学,麦考瑞大学,高频补齐,高频缩写人工补齐
+Zhejiang Ocean Univ,浙江海洋大学,浙江海洋大学,高频补齐,高频缩写人工补齐
+Univ Johannesburg,约翰内斯堡大学,约翰内斯堡大学,高频补齐,高频缩写人工补齐
+Univ Calif Santa Barbara,加州大学圣巴巴拉分校,加州大学圣巴巴拉分校,高频补齐,高频缩写人工补齐
+Lehigh Univ,利哈伊大学,利哈伊大学,高频补齐,高频缩写人工补齐
+Univ Lyon 1,里昂第一大学,里昂第一大学,高频补齐,高频缩写人工补齐
+Chongqing Technol & Business Univ,重庆工商大学,重庆工商大学,高频补齐,高频缩写人工补齐
+Griffith Univ,格里菲斯大学,格里菲斯大学,高频补齐,高频缩写人工补齐
+Univ Duisburg Essen,杜伊斯堡-埃森大学,杜伊斯堡-埃森大学,高频补齐,高频缩写人工补齐
+Virginia Polytech Inst & State Univ,弗吉尼亚理工大学,弗吉尼亚理工大学,高频补齐,高频缩写人工补齐
+Univ Malaga,马拉加大学,马拉加大学,高频补齐,高频缩写人工补齐
+Univ Liege,列日大学,列日大学,高频补齐,高频缩写人工补齐
+Tech Univ Clausthal,克劳斯塔尔工业大学,克劳斯塔尔工业大学,高频补齐,高频缩写人工补齐
+Sorbonne Univ,索邦大学,索邦大学,高频补齐,高频缩写人工补齐
+Univ Genoa,热那亚大学,热那亚大学,高频补齐,高频缩写人工补齐
+Ningbo Univ Technol,宁波工程学院,宁波工程学院,高频补齐,高频缩写人工补齐
+Changchun Univ Technol,长春工业大学,长春工业大学,高频补齐,高频缩写人工补齐
+Kansas State Univ,堪萨斯州立大学,堪萨斯州立大学,高频补齐,高频缩写人工补齐
+Colorado State Univ,科罗拉多州立大学,科罗拉多州立大学,高频补齐,高频缩写人工补齐
+Xihua Univ,西华大学,西华大学,高频补齐,高频缩写人工补齐
+Univ Palermo,巴勒莫大学,巴勒莫大学,高频补齐,高频缩写人工补齐
+Shahid Bahonar Univ Kerman,克尔曼沙希德巴霍纳尔大学,克尔曼沙希德巴霍纳尔大学,高频补齐,高频缩写人工补齐
+Shahid Beheshti Univ,沙希德贝赫什提大学,沙希德贝赫什提大学,高频补齐,高频缩写人工补齐
+Harvard Univ,哈佛大学,哈佛大学,高频补齐,高频缩写人工补齐
+Univ Ljubljana,卢布尔雅那大学,卢布尔雅那大学,高频补齐,高频缩写人工补齐
+Anhui Agr Univ,安徽农业大学,安徽农业大学,高频补齐,高频缩写人工补齐
+Jiaxing Univ,嘉兴大学,嘉兴大学,高频补齐,高频缩写人工补齐
+Los Alamos Natl Lab,洛斯阿拉莫斯国家实验室,洛斯阿拉莫斯国家实验室,高频补齐,高频缩写人工补齐
+Swedish Univ Agr Sci,瑞典农业科学大学,瑞典农业科学大学,高频补齐,高频缩写人工补齐
+Wageningen Univ,瓦赫宁根大学,瓦赫宁根大学,高频补齐,高频缩写人工补齐
+Univ North Dakota,北达科他大学,北达科他大学,高频补齐,高频缩写人工补齐
+Aston Univ,阿斯顿大学,阿斯顿大学,高频补齐,高频缩写人工补齐
+Banaras Hindu Univ,贝拿勒斯印度教大学,贝拿勒斯印度教大学,高频补齐,高频缩写人工补齐
+Chongqing Univ Technol,重庆理工大学,重庆理工大学,高频补齐,高频缩写人工补齐
+Gubkin Russian State Univ Oil & Gas,古勃金俄罗斯国立石油天然气大学,古勃金俄罗斯国立石油天然气大学,高频补齐,高频缩写人工补齐
+Nanjing Univ Posts & Telecommun,南京邮电大学,南京邮电大学,高频补齐,高频缩写人工补齐
+Tokyo Univ Agr & Technol,东京农工大学,东京农工大学,高频补齐,高频缩写人工补齐
+Univ Exeter,埃克塞特大学,埃克塞特大学,高频补齐,高频缩写人工补齐
+Shandong Normal Univ,山东师范大学,山东师范大学,高频补齐,高频缩写人工补齐
+Rensselaer Polytech Inst,伦斯勒理工学院,伦斯勒理工学院,高频补齐,高频缩写人工补齐
+Univ Southampton,南安普顿大学,南安普顿大学,高频补齐,高频缩写人工补齐
+Univ Penn,宾夕法尼亚大学,宾夕法尼亚大学,高频补齐,高频缩写人工补齐
+Univ Cadiz,加的斯大学,加的斯大学,高频补齐,高频缩写人工补齐
+Korea Inst Geosci & Mineral Resources,韩国地质资源研究院,韩国地质资源研究院,高频补齐,高频缩写人工补齐
+Kobe Univ,神户大学,神户大学,高频补齐,高频缩写人工补齐
+Gazi Univ,加济大学,加济大学,高频补齐,高频缩写人工补齐
+Dalian Natl Lab Clean Energy,大连洁净能源国家实验室,大连洁净能源国家实验室,高频补齐,高频缩写人工补齐
+Henan Univ Sci & Technol,河南科技大学,河南科技大学,高频补齐,高频缩写人工补齐
+Dalhousie Univ,达尔豪斯大学,达尔豪斯大学,高频补齐,高频缩写人工补齐
+Minist Land & Resources,中国国土资源部,中国国土资源部,高频补齐,政府部门历史名称
+Ludong Univ,鲁东大学,鲁东大学,高频补齐,高频缩写人工补齐
+Guangdong Univ Petrochem Technol,广东石油化工学院,广东石油化工学院,高频补齐,高频缩写人工补齐
+Univ Bremen,不来梅大学,不来梅大学,高频补齐,高频缩写人工补齐
+Ulsan Natl Inst Sci & Technol UNIST,蔚山科学技术院,蔚山科学技术院,高频补齐,高频缩写人工补齐
+Tianjin Univ Commerce,天津商业大学,天津商业大学,高频补齐,高频缩写人工补齐
+Shanghai Normal Univ,上海师范大学,上海师范大学,高频补齐,高频缩写人工补齐
+Macau Univ Sci & Technol,澳门科技大学,澳门科技大学,高频补齐,高频缩写人工补齐
+Liaoning Petrochem Univ,辽宁石油化工大学,辽宁石油化工大学,高频补齐,高频缩写人工补齐
+Kasetsart Univ,泰国农业大学,泰国农业大学,高频补齐,高频缩写人工补齐
+Waseda Univ,早稻田大学,早稻田大学,高频补齐,高频缩写人工补齐
+Univ Nova Lisboa,新里斯本大学,新里斯本大学,高频补齐,高频缩写人工补齐
+Univ Fed Espirito Santo,圣埃斯皮里图联邦大学,圣埃斯皮里图联邦大学,高频补齐,高频缩写人工补齐
+Univ Poitiers,普瓦捷大学,普瓦捷大学,高频补齐,高频缩写人工补齐
+Tunghai Univ,东海大学,东海大学,高频补齐,高频缩写人工补齐
+Minist Agr & Rural Affairs,中国农业农村部,中国农业农村部,高频补齐,政府部门正式名称
+Jilin Normal Univ,吉林师范大学,吉林师范大学,高频补齐,高频缩写人工补齐
+Jagiellonian Univ,雅盖隆大学,雅盖隆大学,高频补齐,高频缩写人工补齐
+Hebei Univ Engn,河北工程大学,河北工程大学,高频补齐,高频缩写人工补齐
+Zhejiang Gongshang Univ,浙江工商大学,浙江工商大学,高频补齐,高频缩写人工补齐
+Mississippi State Univ,密西西比州立大学,密西西比州立大学,高频补齐,高频缩写人工补齐
+Warsaw Univ Technol,华沙理工大学,华沙理工大学,高频补齐,高频缩写人工补齐
+Korea Inst Ind Technol,韩国产业技术研究院,韩国产业技术研究院,高频补齐,高频缩写人工补齐
+New Jersey Inst Technol,新泽西理工学院,新泽西理工学院,高频补齐,高频缩写人工补齐
+Univ Southern Calif,南加州大学,南加州大学,高频补齐,高频缩写人工补齐
+Univ Guelph,圭尔夫大学,圭尔夫大学,高频补齐,高频缩写人工补齐
+Nazarbayev Univ,纳扎尔巴耶夫大学,纳扎尔巴耶夫大学,高频补齐,高频缩写人工补齐
+Guangxi Normal Univ,广西师范大学,广西师范大学,高频补齐,高频缩写人工补齐
+Brigham Young Univ,杨百翰大学,杨百翰大学,高频补齐,高频缩写人工补齐
+Hubei Univ Technol,湖北工业大学,湖北工业大学,高频补齐,高频缩写人工补齐
+Gdansk Univ Technol,格但斯克理工大学,格但斯克理工大学,高频补齐,高频缩写人工补齐
+Shenyang Univ Technol,沈阳工业大学,沈阳工业大学,高频补齐,高频缩写人工补齐
+Univ Autonoma Barcelona,巴塞罗那自治大学,巴塞罗那自治大学,高频补齐,高频缩写人工补齐
+Sichuan Normal Univ,四川师范大学,四川师范大学,高频补齐,高频缩写人工补齐
+ShanghaiTech Univ,上海科技大学,上海科技大学,高频补齐,高频缩写人工补齐
+Sichuan Agr Univ,四川农业大学,四川农业大学,高频补齐,高频缩写人工补齐
+Clemson Univ,克莱姆森大学,克莱姆森大学,高频补齐,高频缩写人工补齐
+Xidian Univ,西安电子科技大学,西安电子科技大学,高频补齐,高频缩写人工补齐
+Guangdong Acad Sci,广东省科学院,广东省科学院,高频补齐,高频缩写人工补齐
+Chongqing Med Univ,重庆医科大学,重庆医科大学,高频补齐,高频缩写人工补齐
+Oregon State Univ,俄勒冈州立大学,俄勒冈州立大学,高频补齐,高频缩写人工补齐
+Hirosaki Univ,弘前大学,弘前大学,高频补齐,高频缩写人工补齐
+Brunel Univ London,布鲁内尔大学伦敦,布鲁内尔大学伦敦,高频补齐,高频缩写人工补齐
+Changqing Oilfield Company,中国石油长庆油田公司,中国石油天然气股份有限公司,企业归并,油田公司归并至中国石油天然气股份有限公司
+Daqing Oilfield Co Ltd,中国石油大庆油田有限责任公司,中国石油天然气股份有限公司,企业归并,油田公司归并至中国石油天然气股份有限公司
+CNPC Chuanqing Drilling Engn Co Ltd,中国石油集团川庆钻探工程有限公司,中国石油天然气集团有限公司,企业归并,集团下属工程公司归并至母集团
+Sinopec Petr Explorat & Prod Res Inst,中国石化石油勘探开发研究院,中国石油化工股份有限公司,企业归并,研究院归并至中国石油化工股份有限公司
+PetroChina Huabei Oilfield Company,中国石油华北油田公司,中国石油天然气股份有限公司,企业归并,油田公司归并至中国石油天然气股份有限公司
+PetroChina Huabei Oilfield Co,中国石油华北油田公司,中国石油天然气股份有限公司,企业归并,油田公司归并至中国石油天然气股份有限公司
+Xinjiang Oilfield Co,中国石油新疆油田公司,中国石油天然气股份有限公司,企业归并,油田公司归并至中国石油天然气股份有限公司
+Xinjiang Oilfield Company,中国石油新疆油田公司,中国石油天然气股份有限公司,企业归并,油田公司归并至中国石油天然气股份有限公司
+China Petr & Chem Corp,中国石油化工股份有限公司,中国石油化工股份有限公司,企业归并,公司英文简称归并至母公司
+Liaohe Oilfield Company,中国石油辽河油田公司,中国石油天然气股份有限公司,企业归并,油田公司归并至中国石油天然气股份有限公司
+Changqing Oilfield Co,中国石油长庆油田公司,中国石油天然气股份有限公司,企业归并,油田公司归并至中国石油天然气股份有限公司
+Bohai Oilfield Research Institute,渤海油田研究院,中国海洋石油有限公司,企业归并,中海油系统研究机构归并至中国海洋石油有限公司
+PetroChina Coalbed Methane Co Ltd,中国石油煤层气有限责任公司,中国石油天然气股份有限公司,企业归并,子公司归并至中国石油天然气股份有限公司
+SINOPEC Fushun Research Institute of Petroleum and Petrochemicals,中国石化抚顺石油化工研究院,中国石油化工股份有限公司,企业归并,研究院归并至中国石油化工股份有限公司
+China Oilfield Serv Ltd,中海油田服务股份有限公司,中海油田服务股份有限公司,企业归并,上市公司保持公司级标准名
+CNPC Res Inst Safety & Environm Technol,中国石油集团安全环保技术研究院,中国石油天然气集团有限公司,企业归并,研究院归并至中国石油天然气集团有限公司
+PetroChina Dagang Oilfield Company,中国石油大港油田公司,中国石油天然气股份有限公司,企业归并,油田公司归并至中国石油天然气股份有限公司
+PetroChina Dagang Oilfield Co,中国石油大港油田公司,中国石油天然气股份有限公司,企业归并,油田公司归并至中国石油天然气股份有限公司
+Huabei Oilfield Company,中国石油华北油田公司,中国石油天然气股份有限公司,企业归并,油田公司归并至中国石油天然气股份有限公司
+PetroChina Qinghai Oilfield Company,中国石油青海油田公司,中国石油天然气股份有限公司,企业归并,油田公司归并至中国石油天然气股份有限公司
+China National Petroleum Corporation,中国石油天然气集团有限公司,中国石油天然气集团有限公司,企业归并,公司正式英文名归并至母集团
+CNOOC EnerTech-Drilling & Production Co,中海油能源发展钻采工程有限公司,中国海洋石油有限公司,企业归并,中海油下属公司归并至中国海洋石油有限公司
+Tarim Oilfield Co,中国石油塔里木油田公司,中国石油天然气股份有限公司,企业归并,油田公司归并至中国石油天然气股份有限公司
+Indian Oil Corp Ltd,印度石油公司,印度石油公司,企业归并,公司级主体保持公司名
+ExxonMobil Res & Engn Co,埃克森美孚研究与工程公司,埃克森美孚公司,企业归并,企业研发机构归并至母公司
+Univ Rovira & Virgili,罗维拉-维尔吉利大学,罗维拉-维尔吉利大学,高频补齐,高频缩写人工补齐
+Univ Southern Queensland,南昆士兰大学,南昆士兰大学,高频补齐,高频缩写人工补齐
+Univ Autonoma Metropolitana Iztapalapa,墨西哥自治都市大学伊斯塔帕拉帕校区,墨西哥自治都市大学,高频补齐,校区归并至母校
+VTT Tech Res Ctr Finland,芬兰国家技术研究中心,芬兰国家技术研究中心,高频补齐,高频缩写人工补齐
+Univ Jaen,哈恩大学,哈恩大学,高频补齐,高频缩写人工补齐
+Univ Orleans,奥尔良大学,奥尔良大学,高频补齐,高频缩写人工补齐
+Univ Calif Irvine,加州大学欧文分校,加州大学欧文分校,高频补齐,高频缩写人工补齐
+Univ Ind Santander,桑坦德工业大学,桑坦德工业大学,高频补齐,高频缩写人工补齐
+Univ Peshawar,白沙瓦大学,白沙瓦大学,高频补齐,高频缩写人工补齐
+Univ Sharjah,沙迦大学,沙迦大学,高频补齐,高频缩写人工补齐
+Yildiz Tech Univ,伊尔迪兹技术大学,伊尔迪兹技术大学,高频补齐,高频缩写人工补齐
+Kazan Natl Res Technol Univ,喀山国家研究技术大学,喀山国家研究技术大学,高频补齐,高频缩写人工补齐
+Univ Hull,赫尔大学,赫尔大学,高频补齐,高频缩写人工补齐
+Ben Gurion Univ Negev,本-古里安大学,本-古里安大学,高频补齐,高频缩写人工补齐
+Univ Amsterdam,阿姆斯特丹大学,阿姆斯特丹大学,高频补齐,高频缩写人工补齐
+Univ Estadual Maringa,马林加州立大学,马林加州立大学,高频补齐,高频缩写人工补齐
+Univ Kashan,卡尚大学,卡尚大学,高频补齐,高频缩写人工补齐
+German Aerosp Ctr DLR,德国航空航天中心,德国航空航天中心,高频补齐,高频缩写人工补齐
+Huaiyin Inst Technol,淮阴工学院,淮阴工学院,高频补齐,高频缩写人工补齐
+Murdoch Univ,莫道克大学,莫道克大学,高频补齐,高频缩写人工补齐
+Queen Mary Univ London,伦敦玛丽女王大学,伦敦玛丽女王大学,高频补齐,高频缩写人工补齐
+Sogang Univ,西江大学,西江大学,高频补齐,高频缩写人工补齐
+Univ Campinas UNICAMP,坎皮纳斯大学,坎皮纳斯大学,高频补齐,高频缩写人工补齐
+Univ Chem & Technol Prague,布拉格化工大学,布拉格化工大学,高频补齐,高频缩写人工补齐
+Univ Erlangen Nurnberg,埃尔朗根-纽伦堡大学,埃尔朗根-纽伦堡大学,高频补齐,高频缩写人工补齐
+Univ Rey Juan Carlos,胡安卡洛斯国王大学,胡安卡洛斯国王大学,高频补齐,高频缩写人工补齐
+Univ Santiago de Compostela,圣地亚哥-德孔波斯特拉大学,圣地亚哥-德孔波斯特拉大学,高频补齐,高频缩写人工补齐
+Vienna Univ Technol,维也纳工业大学,维也纳工业大学,高频补齐,高频缩写人工补齐
+Korea Res Inst Chem Technol KRICT,韩国化学研究院,韩国化学研究院,高频补齐,高频缩写人工补齐
+Minist Agr,中国农业部,中国农业部,高频补齐,政府部门历史名称
+Shengli Oilfield Co,中国石化胜利油田分公司,中国石油化工股份有限公司,企业归并,油田公司归并至中国石油化工股份有限公司
+CSIR,科学与工业研究理事会（待区分国家）,科学与工业研究理事会（待区分国家）,用户复核回灌,原始缩写跨印度与南非等国家共用,复核回灌
+Petr Inst,阿布扎比石油学院,阿布扎比石油学院,用户复核回灌,根据阿布扎比地址与石油学院官方校名判定,复核回灌
+Ecole Polytech,综合理工学院（法国/加拿大待区分）,综合理工学院（法国/加拿大待区分）,用户复核回灌,原始简称同时对应法国综合理工学院与蒙特利尔理工学院,复核回灌
+Univ Los Andes,洛斯安第斯大学（待区分国家）,洛斯安第斯大学（待区分国家）,用户复核回灌,原始简称同时对应哥伦比亚与委内瑞拉等国家,复核回灌
+GLA Univ,格拉大学（印度）,格拉大学（印度）,用户复核回灌,根据印度马图拉地址与官方校名判定,复核回灌
+Dong A Univ,东亚大学（韩国/越南待区分）,东亚大学（韩国/越南待区分）,用户复核回灌,原始简称跨韩国与越南同名高校,复核回灌
+Minist Sci & Technol,科学技术部（待区分国家）,科学技术部（待区分国家）,用户复核回灌,原始部门简称跨中国巴基斯坦等国家共用,复核回灌
+Fed Univ Technol,联邦理工大学（待区分国家）,联邦理工大学（待区分国家）,用户复核回灌,原始简称跨尼日利亚巴西等国家共用,复核回灌
+Natl Def Univ,国防大学（待区分国家）,国防大学（待区分国家）,用户复核回灌,原始简称跨土耳其中国台湾马来西亚等地区共用,复核回灌
+Dept Chem Engn,化学工程系,化学工程系（待区分所属机构）,用户复核回灌,部门级子单元需结合母机构再归并,复核回灌
+Islamic Univ,伊斯兰大学（待区分国家）,伊斯兰大学（待区分国家）,用户复核回灌,原始简称跨伊拉克孟加拉国等国家共用,复核回灌
+Univ Technol,科技大学（待区分国家）,科技大学（待区分国家）,用户复核回灌,原始简称跨澳大利亚马来西亚等国家共用,复核回灌
+Xian Polytech Univ,西安工程大学,西安工程大学,高频补齐,高校官方中文名纠正
+Anhui Polytech Univ,安徽工程大学,安徽工程大学,高频补齐,高校官方中文名纠正
+Jiangxi Sci & Technol Normal Univ,江西科技师范大学,江西科技师范大学,高频补齐,高校官方中文名纠正
+Tianjin Med Univ,天津医科大学,天津医科大学,高频补齐,高校官方中文名纠正
+Nanjing Tech Univ NanjingTech,南京工业大学,南京工业大学,高频补齐,高校官方中文名纠正
+Shanghai Polytech Univ,上海第二工业大学,上海第二工业大学,高频补齐,高校官方中文名纠正
+Fujian Med Univ,福建医科大学,福建医科大学,高频补齐,高校官方中文名纠正
+Harbin Med Univ,哈尔滨医科大学,哈尔滨医科大学,高频补齐,高校官方中文名纠正
+Univ Calif Santa Cruz,加州大学圣克鲁斯分校,加州大学圣克鲁斯分校,高频补齐,高校官方中文名纠正
+China Inst Water Resources & Hydropower Res,中国水利水电科学研究院,中国水利水电科学研究院,高频补齐,科研机构官方中文名纠正
+Cent Res Inst Elect Power Ind,电力中央研究所,电力中央研究所,高频补齐,科研机构官方中文名纠正
+CSIRO Mineral Resources,澳大利亚联邦科学与工业研究组织矿产资源部,澳大利亚联邦科学与工业研究组织,高频补齐,科研机构子单元归并至母机构
+Fourth Mil Med Univ,第四军医大学,第四军医大学,高频补齐,高校官方中文名纠正
+Univ Salento,萨兰托大学,萨兰托大学,高频补齐,高校官方中文名纠正
+Univ Brasilia,巴西利亚大学,巴西利亚大学,高频补齐,高校官方中文名纠正
+Natl Acad Sci Ukraine,乌克兰国家科学院,乌克兰国家科学院,高频补齐,科研机构官方中文名纠正
+Stevens Inst Technol,史蒂文斯理工学院,史蒂文斯理工学院,高频补齐,高校官方中文名纠正
+Southwest Med Univ,西南医科大学,西南医科大学,高频补齐,高校官方中文名纠正
+Tikrit Univ,提克里特大学,提克里特大学,高频补齐,高校官方中文名纠正
+Hubei Three Gorges Lab,湖北三峡实验室,湖北三峡实验室,高频补齐,实验室官方中文名纠正
+Maulana Azad Natl Inst Technol,毛拉阿扎德国立理工学院,毛拉阿扎德国立理工学院,高频补齐,高校官方中文名纠正
+Tokyo Univ Marine Sci & Technol,东京海洋大学,东京海洋大学,高频补齐,高校官方中文名纠正
+Taiyuan Inst Technol,太原工业学院,太原工业学院,高频补齐,高校官方中文名纠正
+Univ Tunis El Manar,突尼斯马纳尔大学,突尼斯马纳尔大学,高频补齐,高校官方中文名纠正
+Univ Karachi,卡拉奇大学,卡拉奇大学,高频补齐,高校官方中文名纠正
+Syncrude Canada Ltd,加拿大合成原油有限公司,加拿大合成原油有限公司,高频补齐,企业名称规范译名
+Siirt Univ,锡尔特大学,锡尔特大学,高频补齐,高校官方中文名纠正
+Madurai Kamaraj Univ,马杜赖卡马拉杰大学,马杜赖卡马拉杰大学,高频补齐,高校官方中文名纠正
+Indian Inst Technol BHU,印度理工学院（巴纳拉斯印度教大学）,印度理工学院（巴纳拉斯印度教大学）,高频补齐,高校官方中文名纠正
+IMDEA Mat Inst,马德里高等材料研究院,马德里高等材料研究院,高频补齐,科研机构官方译名纠正
+Hakim Sabzevari Univ,哈基姆萨布泽瓦里大学,哈基姆萨布泽瓦里大学,高频补齐,高校官方中文名纠正
+Research Institute of Enhanced Oil Recovery,提高采收率研究院,中国石油大学（北京）,高频补齐,学校直属研究院归并至母机构
+PetroChina Exploration & Production Company,中国石油勘探与生产分公司,中国石油天然气股份有限公司,高频补齐,企业分公司归并至母公司
+IRGCP,化工与石油工程研究所（法国）,化工与石油工程研究所（法国）,高频补齐,依据法文全称 Institut de Recherche en Génie Chimique et Pétrolier 翻译
+HUTECH Univ,胡志明市技术大学,胡志明市技术大学,高频补齐,高校官方中文名纠正
+E China Normal Univ,华东师范大学,华东师范大学,高频补齐,高校官方中文名纠正
+Dartmouth Coll,达特茅斯学院,达特茅斯学院,高频补齐,高校官方中文名纠正
+Cracow Univ Technol,克拉科夫理工大学,克拉科夫理工大学,高频补齐,高校官方中文名纠正
+Bharathiar Univ,巴拉蒂亚尔大学,巴拉蒂亚尔大学,高频补齐,高校官方中文名纠正
+Univ Estado Rio De Janeiro,里约热内卢州立大学,里约热内卢州立大学,高频补齐,高校官方中文名纠正
+UNL,UNL（葡萄牙新里斯本大学/阿根廷国立滨海大学待区分）,UNL（葡萄牙新里斯本大学/阿根廷国立滨海大学待区分）,用户复核回灌,同一缩写在葡萄牙与阿根廷分别对应不同机构,复核回灌
+Shoolini Univ,舒利尼大学,舒利尼大学,高频补齐,高校官方中文名纠正
+Shenzhen Polytech,深圳职业技术大学,深圳职业技术大学,高频补齐,原深圳职业技术学院于2023年升格为深圳职业技术大学
+Pipeline Transport Inst LLC,俄罗斯管道运输研究院有限责任公司,俄罗斯管道运输研究院有限责任公司,高频补齐,企业研究机构规范译名
+Natl Kaohsiung Univ Sci & Technol,国立高雄科技大学,国立高雄科技大学,高频补齐,高校官方中文名纠正
+Univ Sfax,斯法克斯大学,斯法克斯大学,高频补齐,高校官方中文名纠正
+Chongqing Normal Univ,重庆师范大学,重庆师范大学,高频补齐,高校官方中文名纠正
+Univ Milano Bicocca,米兰比可卡大学,米兰比可卡大学,高频补齐,高校官方中文名纠正
+Siberian Fed Univ,西伯利亚联邦大学,西伯利亚联邦大学,高频补齐,高校官方中文名纠正
+Shandong First Med Univ,山东第一医科大学,山东第一医科大学,高频补齐,高校官方中文名纠正
+Laoshan Lab,崂山实验室,崂山实验室,高频补齐,实验室官方中文名纠正
+Univ Murcia,穆尔西亚大学,穆尔西亚大学,高频补齐,高校官方中文名纠正
+Ohio Univ,俄亥俄大学,俄亥俄大学,高频补齐,高校官方中文名纠正
+Univ Ibadan,伊巴丹大学,伊巴丹大学,高频补齐,高校官方中文名纠正
+Univ Montpellier 2,蒙彼利埃第二大学,蒙彼利埃第二大学,高频补齐,高校历史校名中文纠正
+Saga Univ,佐贺大学,佐贺大学,高频补齐,高校官方中文名纠正
+Gifu Univ,岐阜大学,岐阜大学,高频补齐,高校官方中文名纠正
+Ariel Univ,阿里埃勒大学,阿里埃勒大学,高频补齐,高校官方中文名纠正
+Univ Tasmania,塔斯马尼亚大学,塔斯马尼亚大学,高频补齐,高校官方中文名纠正
+Dezhou Univ,德州学院,德州学院,高频补齐,高校官方中文名纠正
+Kindai Univ,近畿大学,近畿大学,高频补齐,高校官方中文名纠正
+Univ Jyvaskyla,于韦斯屈莱大学,于韦斯屈莱大学,高频补齐,高校官方中文名纠正
+Tamkang Univ,淡江大学,淡江大学,高频补齐,高校官方中文名纠正
+Univ Tubingen,图宾根大学,图宾根大学,高频补齐,高校官方中文名纠正
+Indian Inst Technol Indore,印度理工学院印多尔分校,印度理工学院印多尔分校,高频补齐,高校官方中文名纠正
+Kansai Univ,关西大学,关西大学,高频补齐,高校官方中文名纠正
+Chosun Univ,朝鲜大学校,朝鲜大学校,高频补齐,高校官方中文名纠正
+Chiba Univ,千叶大学,千叶大学,高频补齐,高校官方中文名纠正
+Kwame Nkrumah Univ Sci & Technol,夸梅·恩克鲁玛科技大学,夸梅·恩克鲁玛科技大学,高频补齐,高校官方中文名纠正
+Yancheng Teachers Univ,盐城师范学院,盐城师范学院,高频补齐,高校官方中文名纠正
+Ecopetrol SA,哥伦比亚国家石油公司,哥伦比亚国家石油公司,高频补齐,企业名称规范译名
+Chongqing Univ Posts & Telecommun,重庆邮电大学,重庆邮电大学,高频补齐,高校官方中文名纠正
+Changzhou Inst Technol,常州工学院,常州工学院,高频补齐,高校官方中文名纠正
+Max Planck Inst Chem Energy Convers,马克斯·普朗克化学能量转换研究所,马克斯·普朗克学会,高频补齐,科研机构子单元归并至母机构
+Luoyang Normal Univ,洛阳师范学院,洛阳师范学院,高频补齐,高校官方中文名纠正
+Liaoning Univ Technol,辽宁工业大学,辽宁工业大学,高频补齐,高校官方中文名纠正
+Natl Inst Stand & Technol,美国国家标准与技术研究院,美国国家标准与技术研究院,高频补齐,政府科研机构官方中文名纠正
+Czestochowa Tech Univ,琴斯托霍瓦理工大学,琴斯托霍瓦理工大学,高频补齐,高校官方中文名纠正
+Natl Inst Environm Studies,国立环境研究所,国立环境研究所,高频补齐,政府科研机构官方中文名纠正
+Durban Univ Technol,德班理工大学,德班理工大学,高频补齐,高校官方中文名纠正
+Univ Thessaly,色萨利大学,色萨利大学,高频补齐,高校官方中文名纠正
+Univ Regensburg,雷根斯堡大学,雷根斯堡大学,高频补齐,高校官方中文名纠正
+Vanderbilt Univ,范德堡大学,范德堡大学,高频补齐,高校官方中文名纠正
+Max Planck Inst Colloids & Interfaces,马克斯·普朗克胶体与界面研究所,马克斯·普朗克学会,高频补齐,科研机构子单元归并至母机构
+Montana State Univ,蒙大拿州立大学,蒙大拿州立大学,高频补齐,高校官方中文名纠正
+Sao Paulo State Univ UNESP,圣保罗州立大学,圣保罗州立大学,高频补齐,高校官方中文名纠正
+Shijiazhuang Tiedao Univ,石家庄铁道大学,石家庄铁道大学,高频补齐,高校官方中文名纠正
+Hubei Univ Sci & Technol,湖北科技学院,湖北科技学院,高频补齐,高校官方中文名纠正
+Hong Kong Univ Sci & Technol Guangzhou,香港科技大学（广州）,香港科技大学（广州）,高频补齐,高校官方中文名纠正
+Egyptian Petr Res Inst EPRI,埃及石油研究所,埃及石油研究所,高频补齐,科研机构官方中文名纠正
+Max Planck Inst Kohlenforsch,马克斯·普朗克煤炭研究所,马克斯·普朗克学会,高频补齐,科研机构子单元归并至母机构
+Cent Queensland Univ,中央昆士兰大学,中央昆士兰大学,高频补齐,高校官方中文名纠正
+Sapienza Univ Roma,罗马第一大学,罗马第一大学,高频补齐,高校通行中文名纠正
+Rochester Inst Technol,罗切斯特理工学院,罗切斯特理工学院,高频补齐,高校官方中文名纠正
+Pondicherry Univ,本地治里大学,本地治里大学,高频补齐,高校官方中文名纠正
+Univ Nacl Colombia Sede Medellin,哥伦比亚国立大学麦德林分校,哥伦比亚国立大学,高频补齐,高校分校归并至母机构
+Chinese Peoples Liberat Army Gen Hosp,中国人民解放军总医院,中国人民解放军总医院,高频补齐,医院官方中文名纠正
+Foshan Xianhu Lab,佛山仙湖实验室,佛山仙湖实验室,高频补齐,实验室官方中文名纠正
+Karl Franzens Univ Graz,格拉茨大学,格拉茨大学,高频补齐,高校官方中文名纠正
+Univ Tecnol Fed Parana,巴拉那联邦技术大学,巴拉那联邦技术大学,高频补齐,高校官方中文名纠正
+Czech Univ Life Sci Prague,布拉格捷克生命科学大学,布拉格捷克生命科学大学,高频补齐,高校官方中文名纠正
+Florida Int Univ,佛罗里达国际大学,佛罗里达国际大学,高频补齐,高校官方中文名纠正
+Sinopec Shengli Oilfield Co,中国石化胜利油田分公司,中国石油化工股份有限公司,高频补齐,油田分公司归并至母公司
+Dongbei Univ Finance & Econ,东北财经大学,东北财经大学,高频补齐,高校官方中文名纠正
+Changwon Natl Univ,昌原大学校,昌原大学校,高频补齐,高校官方中文名纠正
+Haldor Topsoe Res Labs,托普索研究实验室,托普索公司,高频补齐,企业研发单元归并至母公司
+Chitkara Univ,奇特卡拉大学,奇特卡拉大学,高频补齐,高校官方中文名纠正
+Natl Ctr Sci Res Demokritos,德谟克利特国家科学研究中心,德谟克利特国家科学研究中心,高频补齐,科研机构官方中文名纠正
+State Key Lab Enhanced Oil Recovery,提高采收率国家重点实验室,提高采收率国家重点实验室,高频补齐,国家重点实验室名称规范化
+Univ Mohaghegh Ardabili,莫哈格格·阿尔达比利大学,莫哈格格·阿尔达比利大学,高频补齐,高校官方中文名纠正
+Chongqing Inst Geol & Mineral Resources,重庆地质矿产研究院,重庆地质矿产研究院,高频补齐,科研机构官方中文名纠正
+Fujian Sci & Technol Innovat Lab Optoelect Informa,福建省光电信息科学与技术创新实验室,福建省光电信息科学与技术创新实验室,高频补齐,实验室官方中文名纠正
+Qingdao New Energy Shandong Lab,青岛新能源山东实验室,青岛新能源山东实验室,高频补齐,实验室官方中文名纠正
+Kitami Inst Technol,北见工业大学,北见工业大学,高频补齐,高校官方中文名纠正
+Cent Min Inst,中央矿业研究所,中央矿业研究所,高频补齐,科研机构官方中文名纠正
+Southern Marine Sci & Engn Guangdong Lab Guangzho,南方海洋科学与工程广东省实验室（广州）,南方海洋科学与工程广东省实验室（广州）,高频补齐,实验室官方中文名纠正
+Oil & Gas Technology Research Institute,石油天然气技术研究院,石油天然气技术研究院,高频补齐,科研机构名称规范化
+Singapore Univ Technol & Design,新加坡科技设计大学,新加坡科技设计大学,高频补齐,高校官方中文名纠正
+State Key Lab Nat Gas Hydrate,天然气水合物国家重点实验室,天然气水合物国家重点实验室,高频补齐,国家重点实验室名称规范化
+Natl Univ Ireland,爱尔兰国立大学,爱尔兰国立大学,高频补齐,高校通行中文名纠正
+Jidong Oilfield Company,冀东油田公司,中国石油天然气股份有限公司,高频补齐,油田公司归并至母公司
+Xian Jiaotong Liverpool Univ,西交利物浦大学,西交利物浦大学,高频补齐,高校官方中文名纠正
+Univ Technol Compiegne,贡比涅技术大学,贡比涅技术大学,高频补齐,高校官方中文名纠正
+Univ Agr Faisalabad,费萨拉巴德农业大学,费萨拉巴德农业大学,高频补齐,高校官方中文名纠正
+Pontificia Univ Catolica Valparaiso,瓦尔帕莱索宗座天主教大学,瓦尔帕莱索宗座天主教大学,高频补齐,高校官方中文名纠正
+Carl von Ossietzky Univ Oldenburg,卡尔·冯·奥西茨基奥尔登堡大学,卡尔·冯·奥西茨基奥尔登堡大学,高频补齐,高校官方中文名纠正
+Hacettepe Univ,哈杰特佩大学,哈杰特佩大学,高频补齐,高校通行译名纠正
+Jieyang Ctr,揭阳中心,揭阳中心,高频补齐,中文地名机构名称纠正
+Masdar Inst Sci & Technol,马斯达尔科学技术研究院,哈利法大学,高频补齐,2017年并入哈利法大学后按母机构归并
+Govt Coll Univ,政府学院大学（巴基斯坦待区分校区）,政府学院大学（巴基斯坦待区分校区）,高频待复核,原始简称可能对应拉合尔或费萨拉巴德等不同校区,复核回灌
+Mepco Schlenk Engn Coll,梅普科施伦克工程学院,梅普科施伦克工程学院,高频补齐,高校名称规范译名
+Synfuels China Co Ltd,中科合成油技术有限公司,中科合成油技术有限公司,高频补齐,企业名称规范译名
+Saveetha Inst Med & Tech Sci,萨维塔医学与技术科学学院,萨维塔医学与技术科学学院,高频补齐,高校名称规范译名
+Payame Noor Univ,帕亚梅努尔大学,帕亚梅努尔大学,高频补齐,高校名称规范译名
+CSIR,印度科学与工业研究理事会,印度科学与工业研究理事会,用户复核回灌,用户在复核表中已明确判定为印度机构
+Ecole Polytech,巴黎综合理工学院,巴黎综合理工学院（法国）,用户复核回灌,用户在复核表中已明确判定为法国机构
+Natl Univ Sci & Technol,国立科学技术大学,国立科学技术大学（巴基斯坦）,用户复核回灌,用户在复核表中已明确判定为巴基斯坦机构
+Univ Los Andes,洛斯安第斯大学（智利）,洛斯安第斯大学（智利）,用户复核回灌,用户在复核表中已明确判定为智利机构
+Dong A Univ,东亚大学（韩国）,东亚大学（韩国）,用户复核回灌,用户在复核表中已明确判定为韩国机构
+UNL,内布拉斯加大学林肯分校,内布拉斯加大学林肯分校,用户复核回灌,用户在复核表中已明确判定为美国高校
+Minist Sci & Technol,中国科学技术部,中国科学技术部,用户复核回灌,用户在复核表中已明确判定为中国政府部门
+EPRI,美国电力科学研究院,美国电力科学研究院,用户复核回灌,用户在复核表中修订为更准确的中文译名
+Natl Def Univ,国防大学（美国）,国防大学（美国）,用户复核回灌,用户在复核表中已明确判定为美国机构
+Univ Technol,伊拉克科技大学,伊拉克科技大学,用户复核回灌,用户在复核表中已明确判定为伊拉克高校
+Govt Coll Univ,政府学院大学（巴基斯坦待区分校区）,政府学院大学（巴基斯坦待区分校区）,用户复核回灌,用户仅确定国家层级尚需区分具体校区,复核回灌
+Fed Univ Technol,联邦理工大学（尼日利亚待区分校区）,联邦理工大学（尼日利亚待区分校区）,用户复核回灌,用户仅确定国家层级尚需区分具体校区,复核回灌
+Dept Chem Engn,化学工程系,化学工程系（待区分所属机构）,用户复核回灌,用户仅确认部门类型尚未确认母机构,复核回灌
+Islamic Univ,伊斯兰大学（中东待区分国家）,伊斯兰大学（中东待区分国家）,用户复核回灌,用户仅缩小到中东范围仍需继续区分国家,复核回灌
+Japan Sci & Technol Agcy JST,日本科学技术振兴机构,日本科学技术振兴机构,高频补齐,JST北京代表处与中科院页面均采用该中文名
+Univ Tehran Med Sci,德黑兰医科大学,德黑兰医科大学,高频补齐,依据学校英文全称 Tehran University of Medical Sciences 翻译
+Natl Inst Technol Rourkela,鲁尔克拉国家技术学院,鲁尔克拉国家技术学院,高频补齐,依据学校官网与QS中文页面译名统一
+Menia Univ,米尼亚大学,米尼亚大学,高频补齐,原始拼写为 Menia 实际对应 Minia University
+Univ Tunku Abdul Rahman,拉曼大学,拉曼大学,高频补齐,学校中文官网采用拉曼大学为正式中文名

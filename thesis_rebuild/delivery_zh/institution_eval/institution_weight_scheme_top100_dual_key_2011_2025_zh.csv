@@ -1,8 +1,8 @@
 指标代码,指标名称,维度代码,指标维度,指标方向,先验权重,熵权法权重,CRITIC法权重,组合权重
-distinct_paper_count,去重论文总数,research_output,科研产出,正向,0.166667,0.523765,0.148189,0.27954
-recent_paper_ratio_2021_2025,近五年发文占比,research_output,科研产出,正向,0.166667,0.063235,0.178328,0.136077
-h_index,H指数,academic_impact,学术影响,正向,0.166667,0.072245,0.099898,0.112937
-high_cited_paper_ratio,高被引论文占比,academic_impact,学术影响,正向,0.166667,0.078596,0.128411,0.124558
-collaboration_paper_ratio,合作论文占比,collaboration_international,合作与国际化,正向,0.111111,0.067011,0.163824,0.113982
-international_collaboration_paper_ratio,国际合作论文占比,collaboration_international,合作与国际化,正向,0.111111,0.151778,0.174177,0.145689
-partner_country_region_count,合作国家/地区数,collaboration_international,合作与国际化,正向,0.111111,0.043371,0.107173,0.087218
+distinct_paper_count,去重论文总数,research_output,科研产出,正向,0.166667,0.523855,0.149319,0.279947
+recent_paper_ratio_2021_2025,近五年发文占比,research_output,科研产出,正向,0.166667,0.062234,0.179292,0.136064
+h_index,H指数,academic_impact,学术影响,正向,0.166667,0.073209,0.100834,0.11357
+high_cited_paper_ratio,高被引论文占比,academic_impact,学术影响,正向,0.166667,0.078805,0.126634,0.124035
+collaboration_paper_ratio,合作论文占比,collaboration_international,合作与国际化,正向,0.111111,0.065341,0.162848,0.1131
+international_collaboration_paper_ratio,国际合作论文占比,collaboration_international,合作与国际化,正向,0.111111,0.152735,0.17321,0.145686
+partner_country_region_count,合作国家/地区数,collaboration_international,合作与国际化,正向,0.111111,0.04382,0.107862,0.087598

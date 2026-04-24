@@ -31,6 +31,7 @@ INPUT_ENCODING = "utf-8-sig"
 OUTPUT_ENCODING = "gb18030"
 SUMMARY_ENCODING = "gb18030"
 RANDOM_STATE = 42
+LDA_N_JOBS = int(os.environ.get("TOPIC_LDA_N_JOBS", "1"))
 
 PERIODS = (
     ("2011-2015", 2011, 2015),
@@ -1157,7 +1158,7 @@ def evaluate_topic_counts(period_label: str, documents: list[str]) -> tuple[list
             learning_offset=50.0,
             batch_size=2048,
             random_state=RANDOM_STATE,
-            n_jobs=-1,
+            n_jobs=LDA_N_JOBS,
         )
         model.fit(matrix)
         rows.append(
@@ -1225,7 +1226,7 @@ def fit_period_model(period_label: str, documents: list[str], topic_count: int) 
         learning_offset=50.0,
         batch_size=4096,
         random_state=RANDOM_STATE,
-        n_jobs=-1,
+        n_jobs=LDA_N_JOBS,
     )
     doc_topic = model.fit_transform(matrix)
     dominant_topics = np.argmax(doc_topic, axis=1)
