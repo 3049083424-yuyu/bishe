@@ -1,0 +1,20 @@
+主题展示层材料生成完成（双主键版本，2011-2025）
+
+1. 高频词统计基于双主键主题分析使用的同一份入模语料进行重算。
+2. 统计过程沿用摘要筛选、石油领域过滤和分词逻辑，并额外执行展示层全中文化与泛词清洗。
+3. 已同步覆盖原高频词表，并生成词云数据源、阶段 Top20 词表和阶段主题概览表。
+
+各阶段进入词频统计文献数：
+- 2011-2015: 43078 篇
+- 2016-2020: 28845 篇
+- 2021-2025: 31222 篇
+
+输出文件：
+- D:\graduate\thesis_rebuild\topic_evolution_dual_key_2011_2025_rerun_20260425\topic_high_frequency_terms_dual_key_2011_2025.csv
+- D:\graduate\thesis_rebuild\topic_evolution_dual_key_2011_2025_rerun_20260425\topic_wordcloud_terms_dual_key_2011_2025.csv
+- D:\graduate\thesis_rebuild\topic_evolution_dual_key_2011_2025_rerun_20260425\topic_stage_top20_terms_dual_key_2011_2025.csv
+- D:\graduate\thesis_rebuild\topic_evolution_dual_key_2011_2025_rerun_20260425\topic_stage_topic_overview_dual_key_2011_2025.csv
+- D:\graduate\thesis_rebuild\topic_evolution_dual_key_2011_2025_rerun_20260425\topic_wordcloud_2011_2015_dual_key_2011_2025.png
+- D:\graduate\thesis_rebuild\topic_evolution_dual_key_2011_2025_rerun_20260425\topic_wordcloud_2016_2020_dual_key_2011_2025.png
+- D:\graduate\thesis_rebuild\topic_evolution_dual_key_2011_2025_rerun_20260425\topic_wordcloud_2021_2025_dual_key_2011_2025.png
+- D:\graduate\thesis_rebuild\topic_evolution_dual_key_2011_2025_rerun_20260425\topic_wordcloud_panel_dual_key_2011_2025.png

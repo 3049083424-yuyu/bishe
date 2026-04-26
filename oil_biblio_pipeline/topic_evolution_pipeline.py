@@ -6,6 +6,7 @@ import math
 import os
 import random
 import re
+import time
 import unicodedata
 from collections import Counter
 from pathlib import Path
@@ -110,6 +111,12 @@ ENGLISH_PHRASES = {
     "hydrotreating": "hydrotreating",
     "hydrodesulfurization": "hydrodesulfurization",
     "crude distillation": "crude_distillation",
+    "electrical resistivity": "electrical_resistivity",
+    "wastewater treatment": "wastewater_treatment",
+    "quantum dot": "quantum_dot",
+    "quantum dots": "quantum_dot",
+    "carbon dot": "carbon_dot",
+    "carbon dots": "carbon_dot",
 }
 
 TERM_CANONICAL_MAP = {
@@ -358,6 +365,69 @@ TERM_CANONICAL_MAP = {
     "upper": "上部",
     "early": "早期",
     "technique": "工艺",
+    "gradient": "梯度",
+    "resistivity": "电阻率",
+    "electrical_resistivity": "电阻率",
+    "angle": "角度",
+    "information": "信息",
+    "reserves": "储量",
+    "clay": "黏土",
+    "air": "空气",
+    "gasification": "气化",
+    "membrane": "膜",
+    "selectivity": "选择性",
+    "kerogen": "干酪根",
+    "diffusion": "扩散",
+    "transport": "传输",
+    "dolomite": "白云岩",
+    "degradation": "降解",
+    "aromatic": "芳香族",
+    "hydrogel": "水凝胶",
+    "mineral": "矿物",
+    "dissolution": "溶解",
+    "growth": "生长",
+    "eor": "提高采收率",
+    "accuracy": "准确率",
+    "electrolyte": "电解质",
+    "ion": "离子",
+    "electrochemical": "电化学",
+    "wastewater_treatment": "废水处理",
+    "removal": "去除",
+    "wastewater": "废水",
+    "quantum_dot": "量子点",
+    "carbon_dot": "碳点",
+    "modeling": "模拟",
+    "algorithm": "算法",
+    "ammonia": "氨",
+    "nh3": "氨",
+    "nox": "氮氧化物",
+    "spectroscopy": "光谱",
+    "functional": "官能团",
+    "groups": "官能团",
+    "emissions": "排放",
+    "wax": "蜡",
+    "nucleation": "成核",
+    "damage": "损害",
+    "waste": "废弃物",
+    "lignin": "木质素",
+    "consumption": "消耗",
+    "fractured": "裂缝",
+    "hydraulic": "水力",
+    "diagenetic": "成岩",
+    "unit": "装置",
+    "fcc": "催化裂化",
+    "interfacial": "界面",
+    "strategy": "策略",
+    "cell": "电池",
+    "toc": "总有机碳",
+    "ca": "钙",
+    "char": "炭",
+    "li": "锂",
+    "cu": "铜",
+    "pt": "铂",
+    "mg": "镁",
+    "ph": "pH值",
+    "oh": "羟基",
     "页岩气": "页岩气",
     "页岩油": "页岩油",
     "油气勘探": "油气勘探",
@@ -860,6 +930,47 @@ EXTRA_EN_STOPWORDS = {
     "active",
     "species",
     "controlled",
+    "prepared",
+    "prepare",
+    "preparation",
+    "addition",
+    "additions",
+    "improve",
+    "improved",
+    "improves",
+    "increasing",
+    "increases",
+    "various",
+    "key",
+    "presence",
+    "small",
+    "use",
+    "average",
+    "factor",
+    "novel",
+    "promising",
+    "resulting",
+    "revealed",
+    "furthermore",
+    "period",
+    "number",
+    "multi",
+    "better",
+    "enhanced",
+    "effectively",
+    "efficient",
+    "highly",
+    "solid",
+    "understanding",
+    "transfer",
+    "processes",
+    "mass",
+    "treatment",
+    "self",
+    "center",
+    "dot",
+    "wt",
+    "nc",
 }
 
 EXTRA_ZH_STOPWORDS = {
@@ -953,6 +1064,10 @@ def write_csv(path: Path, fieldnames: list[str], rows: list[dict[str, object]]) 
 def write_text(path: Path, lines: list[str]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text("\n".join(lines), encoding=SUMMARY_ENCODING)
+
+
+def log_progress(message: str) -> None:
+    print(f"[{time.strftime('%Y-%m-%d %H:%M:%S')}] {message}", flush=True)
 
 
 def period_label_from_year(year: int) -> str:
@@ -1145,12 +1260,15 @@ def sample_documents(documents: list[str], size: int) -> list[str]:
 
 
 def evaluate_topic_counts(period_label: str, documents: list[str]) -> tuple[list[dict[str, object]], int]:
+    log_progress(f"{period_label}：开始主题数评估，文档数={len(documents)}，采样上限={MODEL_SELECTION_SAMPLE_SIZE}")
     sampled_documents = sample_documents(documents, MODEL_SELECTION_SAMPLE_SIZE)
     vectorizer = build_vectorizer()
     matrix = vectorizer.fit_transform(sampled_documents)
     feature_names = vectorizer.get_feature_names_out().tolist()
+    log_progress(f"{period_label}：主题数评估向量化完成，样本文档数={len(sampled_documents)}，词汇表规模={len(feature_names)}")
     rows: list[dict[str, object]] = []
     for topic_count in CANDIDATE_TOPIC_COUNTS:
+        log_progress(f"{period_label}：开始拟合候选主题数 k={topic_count}")
         model = LatentDirichletAllocation(
             n_components=topic_count,
             max_iter=12,
@@ -1161,14 +1279,17 @@ def evaluate_topic_counts(period_label: str, documents: list[str]) -> tuple[list
             n_jobs=LDA_N_JOBS,
         )
         model.fit(matrix)
+        perplexity = round(float(model.perplexity(matrix)), 6)
+        coherence = round(compute_topic_coherence(model, matrix, feature_names), 6)
+        log_progress(f"{period_label}：完成候选主题数 k={topic_count}，困惑度={perplexity}，一致性={coherence}")
         rows.append(
             {
                 "阶段": period_label,
                 "候选主题数": topic_count,
                 "样本文献数": len(sampled_documents),
                 "词汇表规模": int(matrix.shape[1]),
-                "困惑度": round(float(model.perplexity(matrix)), 6),
-                "一致性得分": round(compute_topic_coherence(model, matrix, feature_names), 6),
+                "困惑度": perplexity,
+                "一致性得分": coherence,
             }
         )
     perplexity_ranks = rank_with_ties([float(row["困惑度"]) for row in rows], reverse=False)
@@ -1182,6 +1303,7 @@ def evaluate_topic_counts(period_label: str, documents: list[str]) -> tuple[list
     for row in rows:
         row["是否选中"] = 1 if int(row["候选主题数"]) == selected_topic_count else 0
     rows.sort(key=lambda row: int(row["候选主题数"]))
+    log_progress(f"{period_label}：主题数评估完成，选定 k={selected_topic_count}")
     return rows, selected_topic_count
 
 
@@ -1216,9 +1338,11 @@ def cosine_similarity_dict(left: dict[str, float], right: dict[str, float]) -> f
 
 
 def fit_period_model(period_label: str, documents: list[str], topic_count: int) -> dict[str, object]:
+    log_progress(f"{period_label}：开始最终模型拟合，文档数={len(documents)}，主题数={topic_count}")
     vectorizer = build_vectorizer()
     matrix = vectorizer.fit_transform(documents)
     feature_names = vectorizer.get_feature_names_out().tolist()
+    log_progress(f"{period_label}：最终模型向量化完成，矩阵形状={matrix.shape[0]}x{matrix.shape[1]}")
     model = LatentDirichletAllocation(
         n_components=topic_count,
         max_iter=18,
@@ -1229,6 +1353,7 @@ def fit_period_model(period_label: str, documents: list[str], topic_count: int) 
         n_jobs=LDA_N_JOBS,
     )
     doc_topic = model.fit_transform(matrix)
+    log_progress(f"{period_label}：最终模型拟合完成")
     dominant_topics = np.argmax(doc_topic, axis=1)
     dominant_probabilities = np.max(doc_topic, axis=1)
     dominant_counts = Counter(int(topic_index) for topic_index in dominant_topics.tolist())
@@ -1481,6 +1606,7 @@ def main() -> None:
     dataset_label = str(args.dataset_label).strip() or DEFAULT_DATASET_LABEL
     output_dir.mkdir(parents=True, exist_ok=True)
     output_paths = build_output_paths(output_dir, dataset_tag)
+    log_progress(f"主题演化主链启动：input={input_path}，output_dir={output_dir}，dataset_tag={dataset_tag}")
 
     period_documents: dict[str, list[str]] = {label: [] for label, _, _ in PERIODS}
     period_source_rows: dict[str, list[dict[str, object]]] = {label: [] for label, _, _ in PERIODS}
@@ -1500,10 +1626,14 @@ def main() -> None:
         for label, _, _ in PERIODS
     }
     token_counter: Counter[str] = Counter()
+    scanned_rows = 0
 
     with input_path.open("r", encoding=INPUT_ENCODING, newline="") as f:
         reader = csv.DictReader(f)
         for row in reader:
+            scanned_rows += 1
+            if scanned_rows % 50000 == 0:
+                log_progress(f"预处理扫描进度：已读取 {scanned_rows} 篇文献")
             year_text = compact_text(row.get("year", ""))
             if not year_text.isdigit():
                 continue
@@ -1537,6 +1667,14 @@ def main() -> None:
                 }
             )
 
+    for period_label, _, _ in PERIODS:
+        log_progress(
+            f"{period_label}：预处理完成，阶段文献数={preprocess_stats[period_label]['阶段文献数']}，"
+            f"有摘要={preprocess_stats[period_label]['有摘要文献数']}，"
+            f"通过领域过滤={preprocess_stats[period_label]['通过领域过滤文献数']}，"
+            f"进入建模={preprocess_stats[period_label]['进入建模文献数']}"
+        )
+
     preprocess_rows = [preprocess_stats[label] for label, _, _ in PERIODS]
     selection_rows: list[dict[str, object]] = []
     fitted_results: dict[str, dict[str, object]] = {}
@@ -1556,6 +1694,7 @@ def main() -> None:
         selection_rows.extend(selection_part_rows)
         selected_topic_counts[period_label] = selected_topic_count
         result = fit_period_model(period_label, documents, selected_topic_count)
+        log_progress(f"{period_label}：最终模型结果整理完成，主题数={selected_topic_count}")
         fitted_results[period_label] = result
         preprocess_stats[period_label]["词汇表规模"] = int(result["matrix_shape"][1])
         all_topic_keyword_rows.extend(result["topic_keyword_rows"])
@@ -1584,6 +1723,7 @@ def main() -> None:
             )
 
     left_period, middle_period, right_period = [label for label, _, _ in PERIODS]
+    log_progress("开始计算相邻阶段主题相似度与演化路径")
     match_12, similarity_rows_12 = match_topics_between_periods(
         left_period,
         middle_period,
@@ -1601,6 +1741,7 @@ def main() -> None:
         for period_label, _, _ in PERIODS
     }
     path_rows = build_evolution_paths(topic_strength_by_period, match_12, match_23)
+    log_progress("主题演化路径计算完成，开始写出结果文件")
 
     write_csv(output_paths["preprocess_stats"], ["阶段", "年份范围", "阶段文献数", "有摘要文献数", "英文摘要文献数", "中文摘要文献数", "通过领域过滤文献数", "进入建模文献数", "平均有效词数", "词汇表规模"], preprocess_rows)
     write_csv(output_paths["model_selection"], ["阶段", "候选主题数", "样本文献数", "词汇表规模", "困惑度", "一致性得分", "困惑度排名", "一致性排名", "综合排序值", "是否选中"], selection_rows)
@@ -1612,6 +1753,7 @@ def main() -> None:
     write_csv(output_paths["evolution_paths"], ["演化路径编号", "2011-2015主题编号", "2011-2015主题标签", "2011-2015主题强度", "2016-2020主题编号", "2016-2020主题标签", "2016-2020主题强度", "2021-2025主题编号", "2021-2025主题标签", "2021-2025主题强度"], path_rows)
     plot_topic_intensity(path_rows, output_paths["intensity_curve"], dataset_label)
     write_summary(output_paths["summary"], dataset_label, preprocess_rows, selection_rows, all_topic_strength_rows, path_rows)
+    log_progress("主题演化主链写出完成")
 
     print(f"output_dir={output_dir}")
     for period_label, _, _ in PERIODS:
@@ -1630,3 +1772,7 @@ __all__ = [
     "main",
     "period_label_from_year",
 ]
+
+
+if __name__ == "__main__":
+    main()

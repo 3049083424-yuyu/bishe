@@ -60,6 +60,46 @@ INTERNATIONAL_PHRASES_CN = (
     "国际石油天然气生产者协会",
 )
 INTERNATIONAL_ABBREVIATIONS = {"iea", "opec", "wpc", "spe", "iogp"}
+GOVERNMENT_SUFFIXES_CN = (
+    "教育部",
+    "科学技术部",
+    "科技部",
+    "自然资源部",
+    "国土资源部",
+    "生态环境部",
+    "环境保护部",
+    "农业农村部",
+    "农业部",
+    "工业和信息化部",
+    "应急管理部",
+    "国防部",
+    "能源部",
+    "交通部",
+    "交通运输部",
+    "水利部",
+    "卫生部",
+)
+GOVERNMENT_PHRASES_CN = (
+    "地质调查局",
+    "海洋地质调查局",
+    "海洋局",
+    "环境保护署",
+    "国家标准与技术研究院",
+    "国家航空航天局",
+)
+GOVERNMENT_PHRASES_EN = (
+    "ministry",
+    "geological survey",
+    "geol survey",
+    "environmental protection agency",
+    "national institute of standards and technology",
+    "national aeronautics and space administration",
+)
+GOVERNMENT_ABBREVIATIONS = {"nasa", "nist", "epa", "usgs", "geus"}
+GOVERNMENT_EXCLUDE_HINTS_CN = ("重点实验室", "实验室", "学院", "大学", "课题组", "教研室")
+GOVERNMENT_EXCLUDE_HINTS_EN = ("key laboratory", "laboratory", "lab", "college", "school", "university", "faculty")
+GOVERNMENT_SUFFIX_EXCLUDE_HINTS_CN = GOVERNMENT_EXCLUDE_HINTS_CN + ("公司", "集团", "股份有限公司", "有限责任公司", "分公司", "油田", "石化", "工程公司")
+GOVERNMENT_SUFFIX_EXCLUDE_HINTS_EN = GOVERNMENT_EXCLUDE_HINTS_EN + ("company", "corporation", "corp", "inc", "limited", "oilfield", "petrochemical")
 GOVERNMENT_EXACT_NAMES = {
     "中国教育部",
     "教育部",
@@ -132,6 +172,10 @@ DIRECT_CANONICAL_ALIASES = {
     "\uff08\u5317\u4eac\uff09\u4e2d\u56fd\u77ff\u4e1a\u5927\u5b66": "\u4e2d\u56fd\u77ff\u4e1a\u5927\u5b66\uff08\u5317\u4eac\uff09",
     "\uff08\u5f90\u5dde\uff09\u4e2d\u56fd\u77ff\u4e1a\u5927\u5b66": "\u4e2d\u56fd\u77ff\u4e1a\u5927\u5b66",
     "\uff08\u6b66\u6c49\uff09\u4e2d\u56fd\u5730\u8d28\u5927\u5b66": "\u4e2d\u56fd\u5730\u8d28\u5927\u5b66\uff08\u6b66\u6c49\uff09",
+    "\u4e2d\u534e\u4eba\u6c11\u5171\u548c\u56fd\u751f\u6001\u73af\u5883\u90e8": "\u4e2d\u56fd\u751f\u6001\u73af\u5883\u90e8",
+    "\u751f\u6001\u73af\u5883\u90e8": "\u4e2d\u56fd\u751f\u6001\u73af\u5883\u90e8",
+    "\u4e2d\u534e\u4eba\u6c11\u5171\u548c\u56fd\u5e94\u6025\u7ba1\u7406\u90e8": "\u4e2d\u56fd\u5e94\u6025\u7ba1\u7406\u90e8",
+    "\u5de5\u4e1a\u548c\u4fe1\u606f\u5316\u90e8": "\u4e2d\u56fd\u5de5\u4e1a\u548c\u4fe1\u606f\u5316\u90e8",
 }
 
 OUTPUT_FILE_TEMPLATES = {
@@ -172,6 +216,80 @@ def normalize_institution_type_label(value: object) -> str:
 def apply_direct_canonical_alias(value: object) -> str:
     text = compact_text(value)
     return DIRECT_CANONICAL_ALIASES.get(text, text)
+
+
+GOVERNMENT_PARENT_NORMALIZATION_RULES = (
+    (
+        "\u4e2d\u56fd\u5730\u8d28\u8c03\u67e5\u5c40",
+        (
+            "\u4e2d\u56fd\u5730\u8d28\u8c03\u67e5\u5c40",
+            "\u5e7f\u5dde\u6d77\u6d0b\u5730\u8d28\u8c03\u67e5\u5c40",
+            "\u56fd\u571f\u8d44\u6e90\u90e8\u5e7f\u5dde\u6d77\u6d0b\u5730\u8d28\u8c03\u67e5\u5c40",
+            "china geological survey",
+            "chinese geological survey",
+            "china geol survey",
+            "geological survey of china",
+            "guangzhou marine geological survey",
+            "guangzhou marine geol survey",
+        ),
+    ),
+    (
+        "\u56fd\u5bb6\u6d77\u6d0b\u5c40",
+        (
+            "\u56fd\u5bb6\u6d77\u6d0b\u5c40",
+            "state ocean administration",
+            "state oceanic administration",
+            "state ocean adm",
+        ),
+    ),
+    (
+        "\u52a0\u62ff\u5927\u5730\u8d28\u8c03\u67e5\u5c40",
+        (
+            "\u52a0\u62ff\u5927\u5730\u8d28\u8c03\u67e5\u5c40",
+            "\u52a0\u62ff\u5927\u5730\u8d28\u8c03\u67e5\u5c40\u5927\u897f\u6d0b\u5206\u90e8",
+            "geological survey canada",
+            "geol survey canada",
+            "geological survey canada atlantic",
+            "geol survey canada atlantic",
+        ),
+    ),
+    (
+        "\u7f8e\u56fd\u73af\u5883\u4fdd\u62a4\u7f72",
+        (
+            "\u7f8e\u56fd\u73af\u5883\u4fdd\u62a4\u7f72",
+            "environmental protection agency",
+            "us epa",
+            "u s epa",
+            "epa",
+        ),
+    ),
+    (
+        "\u7f8e\u56fd\u56fd\u5bb6\u6807\u51c6\u4e0e\u6280\u672f\u7814\u7a76\u9662",
+        (
+            "\u7f8e\u56fd\u56fd\u5bb6\u6807\u51c6\u4e0e\u6280\u672f\u7814\u7a76\u9662",
+            "national institute of standards and technology",
+            "natl inst technol",
+            "natl inst stand technol",
+            "nist",
+        ),
+    ),
+    (
+        "\u7f8e\u56fd\u56fd\u5bb6\u822a\u7a7a\u822a\u5929\u5c40",
+        (
+            "\u7f8e\u56fd\u56fd\u5bb6\u822a\u7a7a\u822a\u5929\u5c40",
+            "national aeronautics and space administration",
+            "nasa",
+        ),
+    ),
+    (
+        "\u6cf0\u56fd\u56fd\u5bb6\u79d1\u5b66\u6280\u672f\u53d1\u5c55\u7f72",
+        (
+            "\u6cf0\u56fd\u56fd\u5bb6\u79d1\u5b66\u6280\u672f\u53d1\u5c55\u7f72",
+            "national science and technology development agency",
+            "nstda",
+        ),
+    ),
+)
 
 
 def english_tokens(text: str) -> set[str]:
@@ -229,6 +347,8 @@ def has_institution_anchor(name: str) -> bool:
         return False
     lowered = text.lower()
     if english_tokens(lowered) & INTERNATIONAL_ABBREVIATIONS:
+        return True
+    if has_government_anchor(text):
         return True
     if any(keyword in text for keyword in INSTITUTION_KEYWORDS_CN):
         return True
@@ -327,6 +447,41 @@ def lookup_mapped_institution_name(name: str, raw_to_norm: dict[str, str]) -> st
     return MANUAL_INSTITUTION_ALIASES.get(normalized_key, "")
 
 
+def has_government_anchor(name: str) -> bool:
+    text = strip_institution_quotes(name)
+    if not text:
+        return False
+    lowered = text.lower()
+    if text in GOVERNMENT_EXACT_NAMES:
+        return True
+    if any(text.endswith(suffix) for suffix in GOVERNMENT_SUFFIXES_CN):
+        return True
+    if any(phrase in text for phrase in GOVERNMENT_PHRASES_CN):
+        return True
+    if any(contains_english_keyword(lowered, phrase) for phrase in GOVERNMENT_PHRASES_EN):
+        return True
+    return bool(english_tokens(lowered) & GOVERNMENT_ABBREVIATIONS)
+
+
+def collapse_government_parent_institution(name: str) -> str:
+    text = apply_direct_canonical_alias(strip_institution_quotes(name))
+    if not text:
+        return ""
+    lowered = text.lower()
+    if any(marker in text for marker in GOVERNMENT_SUFFIX_EXCLUDE_HINTS_CN):
+        if "\u4e2d\u56fd\u5730\u8d28\u8c03\u67e5\u5c40" not in text and "\u56fd\u5bb6\u6d77\u6d0b\u5c40" not in text:
+            return text
+    if any(marker in lowered for marker in GOVERNMENT_SUFFIX_EXCLUDE_HINTS_EN):
+        if not any(anchor in normalize_lookup_key(text) for anchor in ("china geological survey", "state ocean administration", "state oceanic administration")):
+            return text
+    normalized_text = normalize_lookup_key(text)
+    for canonical_name, indicators in GOVERNMENT_PARENT_NORMALIZATION_RULES:
+        normalized_indicators = {normalize_lookup_key(indicator) for indicator in indicators}
+        if any(indicator and indicator in normalized_text for indicator in normalized_indicators):
+            return canonical_name
+    return text
+
+
 def score_resolved_institution_name(original: str, candidate: str, resolved: str) -> tuple[int, int, int]:
     score = 0
     if compact_text(resolved) != compact_text(candidate):
@@ -372,7 +527,7 @@ def clean_standardized_institution_name(name: str, raw_to_norm: dict[str, str]) 
             continue
         if not mapped_name and not re.search(r"[\u4e00-\u9fff]", candidate):
             continue
-        resolved = strip_institution_quotes(mapped_name or candidate)
+        resolved = collapse_government_parent_institution(strip_institution_quotes(mapped_name or candidate))
         if is_mixed_translation_artifact(resolved) and not is_mixed_translation_artifact(candidate):
             resolved = candidate
         if len(resolved) < 2 or not re.search(r"[A-Za-z\u4e00-\u9fff]", resolved):
@@ -433,8 +588,22 @@ def classify_institution_type(name: str) -> tuple[str, str]:
     lowered = text.lower()
     if not text:
         return "其他", "空值"
-    if text in GOVERNMENT_EXACT_NAMES or text.endswith("教育部"):
-        return "政府机构", "政府机构特例:教育部"
+    if text in GOVERNMENT_EXACT_NAMES:
+        return "政府机构", "政府机构特例:精确名单"
+    for suffix in GOVERNMENT_SUFFIXES_CN:
+        if text.endswith(suffix) and not any(marker in text for marker in GOVERNMENT_SUFFIX_EXCLUDE_HINTS_CN):
+            return "政府机构", f"政府机构后缀:{suffix}"
+    for phrase in GOVERNMENT_PHRASES_EN:
+        if contains_english_keyword(lowered, phrase) and not any(marker in lowered for marker in GOVERNMENT_SUFFIX_EXCLUDE_HINTS_EN):
+            return "政府机构", f"政府机构英文短语:{phrase}"
+    if not any(marker in text for marker in GOVERNMENT_EXCLUDE_HINTS_CN):
+        for phrase in GOVERNMENT_PHRASES_CN:
+            if phrase in text:
+                return "政府机构", f"政府机构短语:{phrase}"
+    tokens = english_tokens(lowered)
+    matched_gov_abbr = sorted(tokens & GOVERNMENT_ABBREVIATIONS)
+    if matched_gov_abbr:
+        return "政府机构", f"政府机构缩写:{matched_gov_abbr[0]}"
     for keyword in STRONG_ACADEMIC_KEYWORDS_CN:
         if keyword in text:
             return "高校/科研院所", f"高校强特征:{keyword}"
@@ -772,3 +941,7 @@ __all__ = [
     "classify_institution_type",
     "main",
 ]
+
+
+if __name__ == "__main__":
+    main()
